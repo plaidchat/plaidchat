@@ -1,11 +1,11 @@
 {
-  "name": "slack4linux",
+  "name": "slack-4-linux",
   "version": "0.0.0",
   "description": "",
   "keywords": [],
   
-    "homepage": "https://github.com/wlaurance/slack4linux",
-    "bugs": "https://github.com/wlaurance/slack4linux/issues",
+    "homepage": "https://github.com/wlaurance/slack-4-linux",
+    "bugs": "https://github.com/wlaurance/slack-4-linux/issues",
     "author": {
       "name": "Will Laurance",
       "email": "",
@@ -13,7 +13,7 @@
     },
     "repository": {
       "type": "git",
-      "url": "git://github.com/wlaurance/slack4linux.git"
+      "url": "git://github.com/wlaurance/slack-4-linux"
     },
   
   "dependencies": {},
