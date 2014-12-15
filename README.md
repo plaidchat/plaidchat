@@ -3,10 +3,8 @@ slack-4-linux
 
 Slack client for linux. Uses Node Webkit
 
-Running and Develop
-===================
-
-Just did this an hour. Don't hate.
+Running and Developing
+======================
 
 ####Clone the repo
 
