@@ -29,9 +29,8 @@ grunt dist-linux
 ####Run It
 
 ```
-./resources/node-webkit/Linux64/nw ./dist/Linux64/app.nw
+./run.sh
 ```
-
 TODO
 ====
 
