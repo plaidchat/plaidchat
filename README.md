@@ -20,6 +20,12 @@ git clone git@github.com:wlaurance/slack-4-linux.git && cd slack-4-linux
 npm install
 ```
 
+####Build It
+
+```
+grunt dist-linux
+```
+
 ####Run It
 
 ```
