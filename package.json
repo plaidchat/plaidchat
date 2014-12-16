@@ -16,13 +16,19 @@
   },
   "dependencies": {
     "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
     "grunt-node-webkit-builder": "^1.0.0"
   },
   "engines": {
     "node": ">=0.8.0"
   },
-  "os": ["linux"],
+  "os": [
+    "linux"
+  ],
   "scripts": {
     "postinstall": "./install.sh"
+  },
+  "bin": {
+    "slack-for-linux": "./run.sh"
   }
 }
