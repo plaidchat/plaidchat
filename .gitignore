@@ -2,5 +2,5 @@ node_modules/
 tmp/
 .DS_Store
 
-resources/node-webkit/
-dist/
+webkitbuilds/
+cache/
