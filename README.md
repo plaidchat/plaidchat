@@ -33,7 +33,7 @@ npm install
 ####Run It
 
 ```
-node run.js
+./run.js
 ```
 
 Issues
