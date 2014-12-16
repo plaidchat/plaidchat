@@ -1,4 +1,4 @@
-slack-4-linux
+slack-for-linux
 =============
 
 Slack client for linux. Uses Node Webkit
@@ -18,7 +18,7 @@ Running and Developing
 ####Clone the repo
 
 ```
-git clone git@github.com:wlaurance/slack-4-linux.git && cd slack-4-linux
+git clone git@github.com:wlaurance/slack-for-linux.git && cd slack-for-linux
 ```
 
 ####Install deps
@@ -48,7 +48,7 @@ machines. If you run into
 ./resources/node-webkit/Linux64/nw: error while loading shared libraries: libudev.so.0: cannot open shared object file: No such file or directory
 ```
 
-Give [Issue #1](https://github.com/wlaurance/slack-4-linux/issues/1) a look.
+Give [Issue #1](https://github.com/wlaurance/slack-for-linux/issues/1) a look.
 
 
 TODO
