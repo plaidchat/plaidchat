@@ -33,7 +33,7 @@ npm install
 ####Run It
 
 ```
-./run.sh
+node run.js
 ```
 
 Issues

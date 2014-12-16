@@ -29,6 +29,6 @@
     "postinstall": "./install.sh"
   },
   "bin": {
-    "slack-for-linux": "./run.sh"
+    "slack-for-linux": "./run.js"
   }
 }
