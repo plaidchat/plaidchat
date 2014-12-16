@@ -6,6 +6,24 @@ Slack client for linux 64. Uses Node Webkit
 If you are still on a 32 bit version of linux, it is easy to change the install
 script to support your platform.
 
+Installing
+==========
+
+[Install Node](http://nodejs.org/download/) Skip if you already have node.
+
+```
+npm install slack-for-linux -g
+```
+
+If you have setup correctly, the above command will install the package
+somewhere in your path.
+
+Then you can run your client from your terminal of choice.
+
+```
+slack-for-linux
+```
+
 Why
 ===
 
