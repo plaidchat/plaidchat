@@ -28,7 +28,7 @@ Why
 ===
 
 Forgot my mac charger for a trip, and only had a linux laptop.
-I wanted to make a app using [node-webkit](https://github.com/rogerwang/node-webkit).
+I wanted to make an app using [node-webkit](https://github.com/rogerwang/node-webkit).
 
 You should probably just use the chrome extension from Slack. But
 if you are not a chrome user, this could be something worth while.
