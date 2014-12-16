@@ -1,7 +1,10 @@
 slack-for-linux
 =============
 
-Slack client for linux. Uses Node Webkit
+Slack client for linux 64. Uses Node Webkit
+
+If you are still on a 32 bit version of linux, it is easy to change the install
+script to support your platform.
 
 Why
 ===
@@ -25,12 +28,6 @@ git clone git@github.com:wlaurance/slack-for-linux.git && cd slack-for-linux
 
 ```
 npm install
-```
-
-####Build It
-
-```
-grunt dist-linux
 ```
 
 ####Run It
