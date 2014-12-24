@@ -10,4 +10,4 @@ grunt.initConfig({
     },
     src: ['./app/**/*'] // Your node-webkit app
   },
-})
+});
