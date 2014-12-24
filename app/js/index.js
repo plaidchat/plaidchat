@@ -1,4 +1,4 @@
-(function(gui,urllib) {
+(function(gui,urllib,pkg) {
 	'use strict';
 	var win = gui.Window.get();
 	var validSlackRedirect = /(.+\.)?slack-redir.com/i;
@@ -13,4 +13,40 @@
 		}
 		
 	});
-})(require('nw.gui'),require('url'));
+
+	var isMinimized = false;
+	win.on('minimize', function () {
+		isMinimized = true;
+	});
+	win.on('restore', function () {
+		isMinimized = false;
+	});
+	function toggleVisibility() {
+		if (isMinimized) {
+			win.restore();
+		} else {
+			win.minimize();
+		}
+	}
+
+	var tray = new gui.Tray({
+		title: pkg.window.title,
+		icon: pkg.window.icon,
+		click: toggleVisibility
+	});
+	var trayMenu = new gui.Menu();
+	trayMenu.append(new gui.MenuItem({
+		label: 'Show/Hide window',
+		click: toggleVisibility
+	}));
+	trayMenu.append(new gui.MenuItem({
+		type: 'separator'
+	}));
+	trayMenu.append(new gui.MenuItem({
+		label: 'Exit',
+		click: function () {
+			process.exit();
+		}
+	}));
+	tray.menu = trayMenu;
+})(require('nw.gui'),require('url'),require('../package.json'));
