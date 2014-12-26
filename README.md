@@ -1,4 +1,4 @@
-slack-for-linux
+slack-for-linux [![Build Status](https://travis-ci.org/wlaurance/slack-for-linux.svg?branch=master)](https://travis-ci.org/wlaurance/slack-for-linux)
 =============
 
 Slack client for linux 64. Uses Node Webkit
