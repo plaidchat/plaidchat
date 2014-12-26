@@ -1,17 +1,16 @@
-(function(gui,urllib,pkg) {
+(function (gui, urllib, pkg) {
 	'use strict';
 	var win = gui.Window.get();
 	var validSlackRedirect = /(.+\.)?slack-redir.com/i;
 
-	win.on('new-win-policy',function (frame, url, policy) {
+	win.on('new-win-policy', function (frame, url, policy) {
 		var openRequest = urllib.parse(url);
 
-		if ( validSlackRedirect.test(openRequest.host)) {
+		if (validSlackRedirect.test(openRequest.host)) {
 			gui.Shell.openExternal(url);
 			policy.ignore();
-			console.log('Allowing browser to handle: '+ JSON.stringify(openRequest));
+			console.log('Allowing browser to handle: ' + JSON.stringify(openRequest));
 		}
-		
 	});
 
 	var isMinimized = false;
@@ -49,4 +48,4 @@
 		}
 	}));
 	tray.menu = trayMenu;
-})(require('nw.gui'),require('url'),require('../package.json'));
+})(require('nw.gui'), require('url'), require('../package.json'));
