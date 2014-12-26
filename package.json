@@ -31,9 +31,12 @@
   ],
   "scripts": {
     "postinstall": "./install.sh",
-    "test": "jshint *.js app/"
+    "test": "./node_modules/.bin/jshint *.js app/"
   },
   "bin": {
     "slack-for-linux": "./run.js"
+  },
+  "devDependencies": {
+    "jshint": "^2.5.11"
   }
 }
