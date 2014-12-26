@@ -30,7 +30,8 @@
     "linux"
   ],
   "scripts": {
-    "postinstall": "./install.sh"
+    "postinstall": "./install.sh",
+    "test": "jshint *.js app/"
   },
   "bin": {
     "slack-for-linux": "./run.js"
