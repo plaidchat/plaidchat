@@ -1,7 +1,8 @@
+
 /*global document*/
 /*global localStorage*/
 /* exported webslack */
-var webslack = (function(gui,urllib,localStorage) {
+var webslack = (function(gui,urllib,pkg,localStorage) {
 	'use strict';
 	var LOCAL_STORAGE_KEY_CURRENT_DOMAIN = 'currentDomain';
 	var webslack = {};
@@ -12,13 +13,13 @@ var webslack = (function(gui,urllib,localStorage) {
 	var validSlackRedirect = /(.+\.)?slack-redir.com/i;
 	var slackLoginUrl      = 'https://slack.com/signin';
 
-	win.on('new-win-policy',function (frame, url, policy) {
+	win.on('new-win-policy', function (frame, url, policy) {
 		var openRequest = urllib.parse(url);
 
-		if ( validSlackRedirect.test(openRequest.host)) {
+		if (validSlackRedirect.test(openRequest.host)) {
 			gui.Shell.openExternal(url);
 			policy.ignore();
-			console.log('Allowing browser to handle: '+ JSON.stringify(openRequest));
+			console.log('Allowing browser to handle: ' + JSON.stringify(openRequest));
 		}
 	});
 
@@ -70,6 +71,40 @@ var webslack = (function(gui,urllib,localStorage) {
 		}
 	};
 
+	var isMinimized = false;
+	win.on('minimize', function () {
+		isMinimized = true;
+	});
+	win.on('restore', function () {
+		isMinimized = false;
+	});
+	function toggleVisibility() {
+		if (isMinimized) {
+			win.restore();
+		} else {
+			win.minimize();
+		}
+	}
 
+	var tray = new gui.Tray({
+		title: pkg.window.title,
+		icon: pkg.window.icon,
+		click: toggleVisibility
+	});
+	var trayMenu = new gui.Menu();
+	trayMenu.append(new gui.MenuItem({
+		label: 'Show/Hide window',
+		click: toggleVisibility
+	}));
+	trayMenu.append(new gui.MenuItem({
+		type: 'separator'
+	}));
+	trayMenu.append(new gui.MenuItem({
+		label: 'Exit',
+		click: function () {
+			process.exit();
+		}
+	}));
+	tray.menu = trayMenu;
 	return webslack;
-})(require('nw.gui'),require('url'),localStorage);
+})(require('nw.gui'), require('url'), require('../package.json'), localStorage);
