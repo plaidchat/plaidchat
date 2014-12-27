@@ -31,12 +31,13 @@
   ],
   "scripts": {
     "postinstall": "./install.sh",
-    "test": "./node_modules/.bin/jshint *.js app/"
+    "test": "grunt lint"
   },
   "bin": {
     "slack-for-linux": "./run.js"
   },
   "devDependencies": {
-    "jshint": "^2.5.11"
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-lintspaces": "^0.6.0"
   }
 }
