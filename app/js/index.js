@@ -58,7 +58,7 @@ var webslack = (function(gui,urllib,pkg,localStorage) {
 		bodyElement.appendChild(iframeDomElement);
     }
 
-	win.on('document-end',function(frame) {
+	win.on('document-start',function(frame) {
 		if ( frame && frame.contentWindow ) {
 			newLocationToProcess(frame.contentWindow.location.href);
 		}
