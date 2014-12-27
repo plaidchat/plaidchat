@@ -1,15 +1,15 @@
-
-/*global document*/
-/*global localStorage*/
+/* global document */
+/* global localStorage */
 /* exported webslack */
 var webslack = (function(gui,urllib,pkg,localStorage) {
 	'use strict';
 	var LOCAL_STORAGE_KEY_CURRENT_DOMAIN = 'currentDomain';
+    var SLACK_DOMAIN                     = 'slack.com';
+
 	var webslack = {};
 
 	var win = gui.Window.get();
-	var validSlackSubdomain = /https?:\/\/(.+)\.slack.com(\/.*)?/i;
-	var logoutSlackDomain   = /https?:\/\/slack.com(\/.*)?/i;
+	var validSlackSubdomain = /(.+)\.slack.com/i;
 	var validSlackRedirect = /(.+\.)?slack-redir.com/i;
 	var slackLoginUrl      = 'https://slack.com/signin';
 
@@ -23,10 +23,12 @@ var webslack = (function(gui,urllib,pkg,localStorage) {
 		}
 	});
 
-    function newLocationToProcess(msg)
+    function newLocationToProcess(locationToProcess)
     {
-     	if ( validSlackSubdomain.test(msg) ) {
-     		var subdomain = validSlackSubdomain.exec(msg);
+        var locationHostname = urllib.parse(locationToProcess).hostname;
+
+     	if ( validSlackSubdomain.test(locationHostname) ) {
+     		var subdomain = validSlackSubdomain.exec(locationHostname);
      		if ( subdomain[1] && subdomain[1].length > 1 ) {
      			var subdomainFiltered = subdomain[1];
 
@@ -34,7 +36,7 @@ var webslack = (function(gui,urllib,pkg,localStorage) {
      				localStorage.setItem( LOCAL_STORAGE_KEY_CURRENT_DOMAIN, subdomainFiltered );
      			}
      		}
-     	} else if ( logoutSlackDomain.test(msg) ) {
+     	} else if ( locationHostname === SLACK_DOMAIN ) {
      		localStorage.removeItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN);
      	}
     }
@@ -65,7 +67,7 @@ var webslack = (function(gui,urllib,pkg,localStorage) {
 
 	webslack.load = function() {
 		if ( localStorage.getItem( LOCAL_STORAGE_KEY_CURRENT_DOMAIN ) ) {
-			handleLoadIframe( 'https://' + localStorage.getItem( LOCAL_STORAGE_KEY_CURRENT_DOMAIN ) + '.slack.com/');	
+			handleLoadIframe( 'https://' + localStorage.getItem( LOCAL_STORAGE_KEY_CURRENT_DOMAIN ) + '.slack.com/');
 		} else {
 			handleLoadIframe(slackLoginUrl);
 		}
