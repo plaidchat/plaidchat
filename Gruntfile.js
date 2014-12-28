@@ -5,6 +5,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-node-webkit-builder');
 	try {
 		grunt.loadNpmTasks('grunt-contrib-jshint');
+		grunt.loadNpmTasks('grunt-jscs');
 		grunt.loadNpmTasks('grunt-lintspaces');
 	} catch (err) {
 	}
@@ -18,8 +19,14 @@ module.exports = function (grunt) {
 			src: ['./app/**/*'] // Your node-webkit app
 		},
 		jshint: {
-			jshintrc: '.jshintrc',
-			all: ['*.js', 'app/**/*.js']
+			all: ['*.js', 'app/**/*.js'],
+			jshintrc: '.jshintrc'
+		},
+		jscs: {
+			all: '<%= jshint.all %>',
+			options: {
+				config: '.jscsrc'
+			}
 		},
 		lintspaces: {
 			src: ['*', 'app/**/*', '!**/*.png'],
@@ -29,5 +36,5 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('lint', ['jshint', 'lintspaces']);
+	grunt.registerTask('lint', ['jshint', 'jscs', 'lintspaces']);
 };
