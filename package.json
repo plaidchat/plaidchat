@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "grunt-contrib-jshint": "^0.10.0",
+    "grunt-jscs": "^1.1.0",
     "grunt-lintspaces": "^0.6.0"
   }
 }
