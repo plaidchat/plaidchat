@@ -17,6 +17,5 @@
     "strict": true,
     "trailing": true,
     "smarttabs": true,
-    "white": true,
-    "evil":true
+    "white": true
 }
