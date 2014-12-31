@@ -64,4 +64,3 @@ machines. If you run into
 ```
 
 Give [Issue #1](https://github.com/wlaurance/slack-for-linux/issues/1) a look.
-
