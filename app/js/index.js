@@ -2,18 +2,18 @@
 /* global localStorage */
 /* global window */
 /* exported webslack */
-window.webslack = (function(gui,urllib,pkg,localStorage) {
+window.webslack = (function (gui, urllib, pkg, localStorage) {
 	'use strict';
-    var LOCAL_STORAGE_KEY_CURRENT_DOMAIN = 'currentDomain';
-    var SLACK_DOMAIN                     = 'slack.com';
-    var SLACK_LOGIN_URL                  = 'https://slack.com/signin';
-    var webslack = {};
+	var LOCAL_STORAGE_KEY_CURRENT_DOMAIN = 'currentDomain';
+	var SLACK_DOMAIN = 'slack.com';
+	var SLACK_LOGIN_URL = 'https://slack.com/signin';
+	var webslack = {};
 
-    var win = gui.Window.get();
-    var validSlackSubdomain = /(.+)\.slack.com/i;
-    var validSlackRedirect = /(.+\.)?slack-redir.com/i;
+	var win = gui.Window.get();
+	var validSlackSubdomain = /(.+)\.slack.com/i;
+	var validSlackRedirect = /(.+\.)?slack-redir.com/i;
 
-    win.on('new-win-policy', function (frame, url, policy) {
+	win.on('new-win-policy', function (frame, url, policy) {
 		var openRequest = urllib.parse(url);
 
 		if (validSlackRedirect.test(openRequest.host)) {
@@ -23,53 +23,52 @@ window.webslack = (function(gui,urllib,pkg,localStorage) {
 		}
 	});
 
-    function newLocationToProcess(locationToProcess) {
-        var locationHostname = urllib.parse(locationToProcess).hostname;
+	function newLocationToProcess(locationToProcess) {
+		var locationHostname = urllib.parse(locationToProcess).hostname;
 
-        if ( validSlackSubdomain.test(locationHostname) ) {
-            var subdomain = validSlackSubdomain.exec(locationHostname);
-            if ( subdomain[1] && subdomain[1].length > 1 ) {
-                var subdomainFiltered = subdomain[1];
+		if (validSlackSubdomain.test(locationHostname)) {
+			var subdomain = validSlackSubdomain.exec(locationHostname);
+			if (subdomain[1] && subdomain[1].length > 1) {
+				var subdomainFiltered = subdomain[1];
 
-                if ( subdomainFiltered !== localStorage.getItem( LOCAL_STORAGE_KEY_CURRENT_DOMAIN ) ) {
-                    localStorage.setItem( LOCAL_STORAGE_KEY_CURRENT_DOMAIN, subdomainFiltered );
-                }
-            }
-        } else if ( locationHostname === SLACK_DOMAIN ) {
-            localStorage.removeItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN);
-     	}
-    }
+				if (subdomainFiltered !== localStorage.getItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN)) {
+					localStorage.setItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN, subdomainFiltered);
+				}
+			}
+		} else if (locationHostname === SLACK_DOMAIN) {
+			localStorage.removeItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN);
+		}
+	}
 
-    function handleLoadIframe( url ) {
-    	var bodyElement = document.body;
+	function handleLoadIframe(url) {
+		var bodyElement = document.body;
 
-        // Remove all the body's children nodes
-    	while (bodyElement.firstChild) {
-		    bodyElement.removeChild(bodyElement.firstChild);
+		// Remove all the body's children nodes
+		while (bodyElement.firstChild) {
+			bodyElement.removeChild(bodyElement.firstChild);
 		}
 
 		var iframeDomElement = document.createElement('iframe');
 
-		iframeDomElement.setAttribute('src', url );
-		iframeDomElement.setAttribute('frameBorder','0');
-		iframeDomElement.setAttribute('nwdisable','');
-		iframeDomElement.setAttribute('nwfaketop','');
+		iframeDomElement.setAttribute('src', url);
+		iframeDomElement.setAttribute('frameBorder', '0');
+		iframeDomElement.setAttribute('nwdisable', '');
+		iframeDomElement.setAttribute('nwfaketop', '');
 
 		bodyElement.appendChild(iframeDomElement);
-    }
+	}
 
-	win.on('document-start',function(frame) {
-		if ( frame && frame.contentWindow ) {
+	win.on('document-start', function (frame) {
+		if (frame && frame.contentWindow) {
 			newLocationToProcess(frame.contentWindow.location.href);
 		}
 	});
 
-
-	webslack.load = function() {
-		if ( localStorage.getItem( LOCAL_STORAGE_KEY_CURRENT_DOMAIN ) ) {
-			handleLoadIframe( 'https://' + localStorage.getItem( LOCAL_STORAGE_KEY_CURRENT_DOMAIN ) + '.slack.com/');
+	webslack.load = function () {
+		if (localStorage.getItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN)) {
+			handleLoadIframe('https://' + localStorage.getItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN) + '.slack.com/');
 		} else {
-			handleLoadIframe( SLACK_LOGIN_URL );
+			handleLoadIframe(SLACK_LOGIN_URL);
 		}
 	};
 
