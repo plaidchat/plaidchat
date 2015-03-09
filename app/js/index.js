@@ -11,7 +11,7 @@ window.webslack = (function (gui, urllib, pkg, localStorage) {
 
 	var win = gui.Window.get();
 	var validSlackSubdomain = /(.+)\.slack.com/i;
-	var validSlackRedirect = /(.+\.)?slack-redir.com/i;
+	var validSlackRedirect = /(.+\.)?slack-redir.net/i;
 
 	win.on('new-win-policy', function (frame, url, policy) {
 		var openRequest = urllib.parse(url);
