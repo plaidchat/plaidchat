@@ -1,7 +1,10 @@
 (function () {
 	'use strict';
+	var fs = require('fs');
 	var gui = require('nw.gui');
 	var url = require('url');
+	var _ = require('underscore');
+	var getUri = require('get-uri');
 	var pkg = require('../package.json');
 
 	var LOCAL_STORAGE_KEY_CURRENT_DOMAIN = 'currentDomain';
@@ -87,9 +90,10 @@
 		}
 	}
 
+	var trayIcon = 'images/app-32.png';
 	var tray = new gui.Tray({
 		title: pkg.window.title,
-		icon: pkg.window.icon,
+		icon: trayIcon, // Relative to `package.json`
 		click: toggleVisibility
 	});
 	var trayMenu = new gui.Menu();
@@ -107,6 +111,74 @@
 		}
 	}));
 	tray.menu = trayMenu;
+
+	// Generate badge-able favicon for notifications
+	var trayIconImg = document.createElement('link');
+	trayIconImg.href = '../' + trayIcon; // Relative to `index.html`
+	var favicon = new window.Favico({
+		element: trayIconImg,
+		dataUrl: function (dataUrl) {
+			// Generate a location to save the image
+			var filepath = process.env.HOME + '/.slack-for-linux-tray.png';
+
+			// Convert the image to a stream
+			getUri(dataUrl, function handleData (err, dataStream) {
+				// If there was an error, log it (nothing to do regarding the image)
+				if (err) {
+					console.error(err);
+				}
+
+				// Generate a new write stream to the file
+				var iconFile = fs.createWriteStream(filepath);
+				dataStream.pipe(iconFile);
+				dataStream.on('error', console.error);
+				iconFile.on('finish', function handleNewIcon () {
+					tray.icon = filepath;
+				});
+			});
+		}
+	});
+
+	// When we load a new page
+	win.on('loaded', function handlePageLoaded () {
+		// If this is a page with TS on it, then add listeners for unread change events
+		// DEV: tinyspeck is Slack's company name, this is likely an in-house framework
+		var $slackUi = document.querySelector('iframe');
+		var TS = $slackUi.contentWindow && $slackUi.contentWindow.TS;
+		if (TS && !$slackUi.contentWindow._slackForLinuxBoundListeners) {
+			// http://viewsource.in/https://slack.global.ssl.fastly.net/31971/js/rollup-client_1420067921.js#L6413-6419
+			// DEV: This is the same list that is used for growl notifications (`TS.ui.growls`)
+			var _updateUnreadCount = function () {
+				// http://viewsource.in/https://slack.global.ssl.fastly.net/31971/js/rollup-client_1420067921.js#L6497
+				// TODO: Slack makes a distinction between highlights (e.g. @mentions) and normal messages (e.g. chat)
+				//   we should consider doing that too. The variable for this is `TS.model.all_unread_highlights_cnt`.
+				var unreadMsgs = TS.model.all_unread_cnt;
+				if (unreadMsgs) {
+					favicon.badge(unreadMsgs);
+				} else {
+					favicon.reset();
+				}
+			};
+			var updateUnreadCount = _.debounce(_updateUnreadCount, 100);
+			var sig;
+			if (TS.channels) {
+				sig = TS.channels.unread_changed_sig; if (sig) { sig.add(updateUnreadCount); }
+				sig = TS.channels.unread_highlight_changed_sig; if (sig) { sig.add(updateUnreadCount); }
+			}
+			if (TS.groups) {
+				sig = TS.groups.unread_changed_sig; if (sig) { sig.add(updateUnreadCount); }
+				sig = TS.groups.unread_highlight_changed_sig; if (sig) { sig.add(updateUnreadCount); }
+			}
+			if (TS.ims) {
+				sig = TS.ims.unread_changed_sig; if (sig) { sig.add(updateUnreadCount); }
+				sig = TS.ims.unread_highlight_changed_sig; if (sig) { sig.add(updateUnreadCount); }
+			}
+			if (TS.client) {
+				sig = TS.client.login_sig; if (sig) { sig.add(updateUnreadCount); }
+			}
+			$slackUi.contentWindow._slackForLinuxBoundListeners = true;
+		}
+	});
 
 	window.webslack = webslack;
 })();

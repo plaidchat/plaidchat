@@ -19,7 +19,7 @@ module.exports = function (grunt) {
 			src: ['./app/**/*'] // Your node-webkit app
 		},
 		jshint: {
-			all: ['*.js', 'app/**/*.js'],
+			all: ['*.js', 'app/js/*.js'],
 			jshintrc: '.jshintrc'
 		},
 		jscs: {
@@ -29,7 +29,7 @@ module.exports = function (grunt) {
 			}
 		},
 		lintspaces: {
-			src: ['*', 'app/**/*', '!**/*.png'],
+			src: ['*', 'app/**/*', '!**/*.png', '!app/bower_components/**/*', '!app/node_modules/**/*'],
 			options: {
 				editorconfig: '.editorconfig'
 			}

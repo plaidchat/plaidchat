@@ -1,0 +1,7 @@
+{
+  "name": "slack4linux",
+  "version": "0.0.1",
+  "dependencies": {
+    "favico.js": "^0.3.7"
+  }
+}
