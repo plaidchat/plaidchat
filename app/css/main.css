@@ -1,8 +1,61 @@
-html, body, iframe {
+html, body {
 	width: 100%;
 	height: 100%;
 	padding: 0;
 	margin: 0;
 	border: none;
 	overflow: hidden;
+}
+
+body {
+	display: flex;
+}
+
+.hidden {
+	display: none;
+}
+
+.team-select {
+	background: #362533;
+	color: white;
+	/* Width is 44px + 1rem padding */
+	flex-basis: 76px;
+	min-width: 76px;
+	order: -1;
+	text-align: center;
+}
+
+.team-select a {
+	color: inherit;
+}
+
+.team-select__item {
+	list-style: none;
+}
+
+.team-select__item img {
+	/* http://viewsource.in/https://slack.global.ssl.fastly.net/c239/style/rollup-client_secondary.css#L1070 */
+	border-radius: 0.2rem;
+
+	/* Scale down to be same size as user icons */
+	height: 36px;
+	width: auto;
+}
+
+.team-select__item--active::before {
+	display: block;
+	position: absolute;
+	content: '\A0';
+	background: white;
+
+	width: 4px;
+	/* Same as icon */
+	height: 36px;
+
+	/* Use same border radius as icon for good measure*/
+	border-radius: 0 0.2rem 0.2rem 0;
+}
+
+.slack-window--active {
+	flex-grow: 1;
 }
