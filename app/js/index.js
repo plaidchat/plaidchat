@@ -1,9 +1,9 @@
-/* global document */
-/* global localStorage */
-/* global window */
-/* exported webslack */
-window.webslack = (function (gui, urllib, pkg, localStorage) {
+(function () {
 	'use strict';
+	var gui = require('nw.gui');
+	var url = require('url');
+	var pkg = require('../package.json');
+
 	var LOCAL_STORAGE_KEY_CURRENT_DOMAIN = 'currentDomain';
 	var SLACK_DOMAIN = 'slack.com';
 	var SLACK_LOGIN_URL = 'https://slack.com/signin';
@@ -13,18 +13,18 @@ window.webslack = (function (gui, urllib, pkg, localStorage) {
 	var validSlackSubdomain = /(.+)\.slack.com/i;
 	var validSlackRedirect = /(.+\.)?slack-redir.net/i;
 
-	win.on('new-win-policy', function (frame, url, policy) {
-		var openRequest = urllib.parse(url);
+	win.on('new-win-policy', function (frame, urlStr, policy) {
+		var openRequest = url.parse(urlStr);
 
 		if (validSlackRedirect.test(openRequest.host)) {
-			gui.Shell.openExternal(url);
+			gui.Shell.openExternal(urlStr);
 			policy.ignore();
 			console.log('Allowing browser to handle: ' + JSON.stringify(openRequest));
 		}
 	});
 
 	function newLocationToProcess(locationToProcess) {
-		var locationHostname = urllib.parse(locationToProcess).hostname;
+		var locationHostname = url.parse(locationToProcess).hostname;
 
 		if (validSlackSubdomain.test(locationHostname)) {
 			var subdomain = validSlackSubdomain.exec(locationHostname);
@@ -107,5 +107,6 @@ window.webslack = (function (gui, urllib, pkg, localStorage) {
 		}
 	}));
 	tray.menu = trayMenu;
-	return webslack;
-})(require('nw.gui'), require('url'), require('../package.json'), localStorage);
+
+	window.webslack = webslack;
+})();
