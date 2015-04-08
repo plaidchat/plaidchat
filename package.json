@@ -24,7 +24,7 @@
     "grunt-node-webkit-builder": "^1.0.0"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   },
   "os": [
     "linux"
