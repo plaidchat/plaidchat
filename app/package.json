@@ -12,6 +12,9 @@
     "min_height": 650,
     "toolbar": false
   },
+  "webkit": {
+    "plugin": true
+  },
   "chromium-args": "--child-clean-exit",
   "dependencies": {
     "get-uri": "^0.1.3",
