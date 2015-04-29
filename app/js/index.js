@@ -14,16 +14,27 @@
 
 	var win = gui.Window.get();
 	var validSlackSubdomain = /(.+)\.slack.com/i;
-	var validSlackRedirect = /(.+\.)?slack-redir.net/i;
+	var slackDownloadHostname = 'files.slack.com';
 
 	win.on('new-win-policy', function (frame, urlStr, policy) {
+		// Determine where the request is to
 		var openRequest = url.parse(urlStr);
 
-		if (validSlackRedirect.test(openRequest.host)) {
-			gui.Shell.openExternal(urlStr);
-			policy.ignore();
-			console.log('Allowing browser to handle: ' + JSON.stringify(openRequest));
+		// If the request is for a file, download it
+		// DEV: Files can be found on `files.slack.com`
+		//   https://files.slack.com/files-pri/{{id}}/download/tmp.txt
+		if (openRequest.hostname === slackDownloadHostname) {
+			policy.forceDownload();
+			console.log('Downloading file: ', urlStr);
+			return;
 		}
+
+		// Otherwise, open the window via our browser
+		// DEV: An example request is a redirect
+		//   https://slack-redir.net/link?url=http%3A%2F%2Fgoogle.com%2F
+		gui.Shell.openExternal(urlStr);
+		policy.ignore();
+		console.log('Allowing browser to handle: ' + JSON.stringify(openRequest));
 	});
 
 	function newLocationToProcess(locationToProcess) {
@@ -43,7 +54,7 @@
 		}
 	}
 
-	function handleLoadIframe(url) {
+	function handleLoadIframe(urlStr) {
 		var bodyElement = document.body;
 
 		// Remove all the body's children nodes
@@ -53,7 +64,7 @@
 
 		var iframeDomElement = document.createElement('iframe');
 
-		iframeDomElement.setAttribute('src', url);
+		iframeDomElement.setAttribute('src', urlStr);
 		iframeDomElement.setAttribute('frameBorder', '0');
 		iframeDomElement.setAttribute('nwdisable', '');
 		iframeDomElement.setAttribute('nwfaketop', '');
