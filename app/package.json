@@ -1,5 +1,5 @@
 {
-  "name": "slack4linux",
+  "name": "slack-for-linux",
   "main": "views/index.html",
   "version": "0.0.1",
   "single-instance": true,
