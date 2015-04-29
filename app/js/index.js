@@ -5,6 +5,7 @@
 	var url = require('url');
 	var _ = require('underscore');
 	var getUri = require('get-uri');
+	var SlackWindow = require('../js/slack-window.js');
 	var pkg = require('../package.json');
 
 	var LOCAL_STORAGE_KEY_CURRENT_DOMAIN = 'currentDomain';
@@ -36,55 +37,6 @@
 		policy.ignore();
 		console.log('Allowing browser to handle: ' + JSON.stringify(openRequest));
 	});
-
-	function newLocationToProcess(locationToProcess) {
-		var locationHostname = url.parse(locationToProcess).hostname;
-
-		if (validSlackSubdomain.test(locationHostname)) {
-			var subdomain = validSlackSubdomain.exec(locationHostname);
-			if (subdomain[1] && subdomain[1].length > 1) {
-				var subdomainFiltered = subdomain[1];
-
-				if (subdomainFiltered !== localStorage.getItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN)) {
-					localStorage.setItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN, subdomainFiltered);
-				}
-			}
-		} else if (locationHostname === SLACK_DOMAIN) {
-			localStorage.removeItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN);
-		}
-	}
-
-	function handleLoadIframe(urlStr) {
-		var bodyElement = document.body;
-
-		// Remove all the body's children nodes
-		while (bodyElement.firstChild) {
-			bodyElement.removeChild(bodyElement.firstChild);
-		}
-
-		var iframeDomElement = document.createElement('iframe');
-
-		iframeDomElement.setAttribute('src', urlStr);
-		iframeDomElement.setAttribute('frameBorder', '0');
-		iframeDomElement.setAttribute('nwdisable', '');
-		iframeDomElement.setAttribute('nwfaketop', '');
-
-		bodyElement.appendChild(iframeDomElement);
-	}
-
-	win.on('document-start', function (frame) {
-		if (frame && frame.contentWindow) {
-			newLocationToProcess(frame.contentWindow.location.href);
-		}
-	});
-
-	webslack.load = function () {
-		if (localStorage.getItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN)) {
-			handleLoadIframe('https://' + localStorage.getItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN) + '.slack.com/');
-		} else {
-			handleLoadIframe(SLACK_LOGIN_URL);
-		}
-	};
 
 	var isMinimized = false;
 	win.on('minimize', function () {
@@ -150,46 +102,190 @@
 		}
 	});
 
-	// When we load a new page
-	win.on('loaded', function handlePageLoaded () {
-		// If this is a page with TS on it, then add listeners for unread change events
-		// DEV: tinyspeck is Slack's company name, this is likely an in-house framework
-		var $slackUi = document.querySelector('iframe');
-		var TS = $slackUi.contentWindow && $slackUi.contentWindow.TS;
-		if (TS && !$slackUi.contentWindow._slackForLinuxBoundListeners) {
-			// http://viewsource.in/https://slack.global.ssl.fastly.net/31971/js/rollup-client_1420067921.js#L6413-6419
-			// DEV: This is the same list that is used for growl notifications (`TS.ui.growls`)
-			var _updateUnreadCount = function () {
-				// http://viewsource.in/https://slack.global.ssl.fastly.net/31971/js/rollup-client_1420067921.js#L6497
-				// TODO: Slack makes a distinction between highlights (e.g. @mentions) and normal messages (e.g. chat)
-				//   we should consider doing that too. The variable for this is `TS.model.all_unread_highlights_cnt`.
-				var unreadMsgs = TS.model.all_unread_cnt;
-				if (unreadMsgs) {
-					favicon.badge(unreadMsgs);
+	function createSlackIframe(url) {
+		var iframe = document.createElement('iframe');
+		if (url) {
+			iframe.setAttribute('src', url);
+		}
+		iframe.setAttribute('frameBorder', '0');
+		iframe.setAttribute('nwdisable', '');
+		iframe.setAttribute('nwfaketop', '');
+		return iframe;
+	}
+
+	// On the initial page load
+	webslack.load = function () {
+		function newLocationToProcess(locationToProcess) {
+			var locationHostname = url.parse(locationToProcess).hostname;
+
+			if (validSlackSubdomain.test(locationHostname)) {
+				var subdomain = validSlackSubdomain.exec(locationHostname);
+				if (subdomain[1] && subdomain[1].length > 1) {
+					var subdomainFiltered = subdomain[1];
+
+					if (subdomainFiltered !== localStorage.getItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN)) {
+						localStorage.setItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN, subdomainFiltered);
+					}
+				}
+			} else if (locationHostname === SLACK_DOMAIN) {
+				localStorage.removeItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN);
+			}
+		}
+
+		// When a new page loads, process its location
+		function processActiveWindowChange(frame) {
+			// If the frame is our active frame, then process its location
+			if (frame && frame === activeWindow.iframe && frame.contentWindow) {
+				newLocationToProcess(frame.contentWindow.location.href);
+			}
+		}
+		win.on('document-start', processActiveWindowChange);
+
+		// Open our last page
+		var openUrl = SLACK_LOGIN_URL;
+		if (localStorage.getItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN)) {
+			openUrl = 'https://' + localStorage.getItem(LOCAL_STORAGE_KEY_CURRENT_DOMAIN) + '.slack.com/';
+		}
+		var iframe = createSlackIframe(openUrl);
+		iframe.className = 'slack-window slack-window--active';
+
+		// Create a container for window interactions
+		var activeWindow = new SlackWindow(iframe);
+
+		// Render the window on the page
+		document.body.appendChild(iframe);
+
+		// When the window loads
+		activeWindow.on('teams-loaded', function handleLoad () {
+			// Gather team info
+			// team = {id:, name: "slack-for-linux test", email_domain: mailinator.com, domain: account name,
+			//   msg_edit_window_mins, prefs: {default_channels, ...},
+			//   icon: {image_34: http://url/34.png, image_{44,68,88,102,132}, image_default: true},
+			//   over_storage_limit, plan, url: wss://ms144.slack-msgs.com, activity}
+			var activeTeam = activeWindow.getTeam();
+			// DEV: Active team inside of `team` *does not* include `icon`
+			// teams = [{id: user id, name: user name, team_id, team_name: account name, team_name,
+			//   team_icon: {image_34: http://url/34.png, image_{44,68,88,102,132}, image_default: true},
+			//   team_url: https://subdomain.slack.com/}]
+			var teams = activeWindow.getAllTeams();
+
+			// Save our team to the window mapping
+			var teamWindows = {};
+			var teamListItems = {};
+			var teamIconMap = {};
+			teamWindows[activeTeam.id] = activeWindow;
+			teamIconMap[activeTeam.id] = activeTeam.icon;
+
+			// Define notification counter/calculator
+			function _handleNotificationUpdate() {
+				// Calculate the total amount of notifications in each window
+				var slackWindows = _.values(teamWindows);
+				var unreadTotal = slackWindows.reduce(function addNotificationCount (sum, slackWindow) {
+					var unreadCount = (slackWindow.getTS() && slackWindow.getUnreadCount()) || 0;
+					return unreadCount + sum;
+				}, 0);
+
+				// Update our badge
+				if (unreadTotal) {
+					favicon.badge(unreadTotal);
 				} else {
 					favicon.reset();
 				}
-			};
-			var updateUnreadCount = _.debounce(_updateUnreadCount, 100);
-			var sig;
-			if (TS.channels) {
-				sig = TS.channels.unread_changed_sig; if (sig) { sig.add(updateUnreadCount); }
-				sig = TS.channels.unread_highlight_changed_sig; if (sig) { sig.add(updateUnreadCount); }
 			}
-			if (TS.groups) {
-				sig = TS.groups.unread_changed_sig; if (sig) { sig.add(updateUnreadCount); }
-				sig = TS.groups.unread_highlight_changed_sig; if (sig) { sig.add(updateUnreadCount); }
+			var handleNotificationUpdate = _.debounce(_handleNotificationUpdate, 100);
+
+			// Create windows for other teams
+			teams.forEach(function generateWindow (team) {
+				// If there is a team window, continue
+				if (teamWindows[team.team_id]) {
+					return;
+				}
+
+				// Create/load the iframe
+				var iframe = createSlackIframe(team.team_url);
+				iframe.className = 'slack-window hidden';
+				var slackWindow = new SlackWindow(iframe);
+				document.body.appendChild(iframe);
+
+				// Save it to our team mapping
+				teamWindows[team.team_id] = slackWindow;
+				teamIconMap[team.team_id] = team.team_icon;
+			});
+
+			// Create a helper to mark activated link items
+			var activeListItem;
+			function markActiveListItem(listItem) {
+				// If the item is the active item, do nothing
+				if (listItem === activeListItem) {
+					return;
+				}
+
+				// Otherwise, adjust our flags
+				if (activeListItem) {
+					activeListItem.classList.remove('team-select__item--active');
+				}
+				listItem.classList.add('team-select__item--active');
+				activeListItem = listItem;
 			}
-			if (TS.ims) {
-				sig = TS.ims.unread_changed_sig; if (sig) { sig.add(updateUnreadCount); }
-				sig = TS.ims.unread_highlight_changed_sig; if (sig) { sig.add(updateUnreadCount); }
+
+			// Generate a sidebar for our teams
+			var sidebar = document.createElement('div');
+			var linkList = document.createElement('div');
+			sidebar.className = 'team-select';
+			teams.forEach(function addTeamIcon (team, i) {
+				// Create a link for the team
+				var linkListItem = document.createElement('p');
+				var teamLink = document.createElement('a');
+				linkListItem.className = 'team-select__item';
+				var teamImg = document.createElement('img');
+				var teamIcon = teamIconMap[team.team_id];
+				teamImg.src = teamIcon.image_44;
+				teamLink.href = '#';
+
+				// Resolve the team window
+				var teamWindow = teamWindows[team.team_id];
+
+				// When the link is clicked, swap active windows
+				teamLink.onclick = function () {
+					// If the new window is the current window, do nothing
+					if (activeWindow.iframe === teamWindow.iframe) {
+						return;
+					}
+
+					// Otherwise, update our frames
+					activeWindow.iframe.classList.remove('slack-window--active');
+					activeWindow.iframe.classList.add('hidden');
+					teamWindow.iframe.classList.add('slack-window--active');
+					teamWindow.iframe.classList.remove('hidden');
+					activeWindow = teamWindow;
+
+					// Update the link activity
+					markActiveListItem(linkListItem);
+
+					// Update the default page to load
+					processActiveWindowChange(activeWindow.iframe);
+				};
+				teamLink.appendChild(teamImg);
+				linkListItem.appendChild(teamLink);
+				linkList.appendChild(linkListItem);
+
+				// Save the list item by id
+				teamListItems[team.team_id] = linkListItem;
+
+				// When a notification is updated, run our notification update handler
+				teamWindow.on('notifications-updated', handleNotificationUpdate);
+			});
+
+			// Mark the active list item
+			markActiveListItem(teamListItems[activeTeam.id]);
+
+			// If we have more than 1 teams, bind to the DOM
+			sidebar.appendChild(linkList);
+			if (teams.length > 1) {
+				document.body.appendChild(sidebar);
 			}
-			if (TS.client) {
-				sig = TS.client.login_sig; if (sig) { sig.add(updateUnreadCount); }
-			}
-			$slackUi.contentWindow._slackForLinuxBoundListeners = true;
-		}
-	});
+		});
+	};
 
 	window.webslack = webslack;
 })();
