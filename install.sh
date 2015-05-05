@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
-# Exit upon the first error
+# Exit upon the first error and echo commands
 set -e
+set -x
+
+# Override our environment to consider all `npm` installs to be local
+npm_config_global=""
 
 # Install app's dependencies
 cd app/
