@@ -9,7 +9,6 @@ npm_config_global=""
 # Install app's dependencies
 cd app/
 npm install
-../node_modules/.bin/bower install
 cd ../
 
 # Build our application
