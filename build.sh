@@ -3,13 +3,14 @@
 set -e
 set -x
 
-# Override our environment to consider all `npm` installs to be local
-npm_config_global=""
+# Clean up our build folder
+if test -d webkitbuilds/; then
+  rm -r webkitbuilds/
+fi
 
 # Install app's dependencies
 cd app/
 npm install
-../node_modules/.bin/bower install
 cd ../
 
 # Build our application
