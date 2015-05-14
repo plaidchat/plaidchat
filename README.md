@@ -45,7 +45,7 @@ git clone git@github.com:wlaurance/slack-for-linux.git && cd slack-for-linux
 ####Install deps
 
 ```
-npm install
+npm install && ./build.sh
 ```
 
 ####Run It

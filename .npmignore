@@ -2,5 +2,6 @@ node_modules/
 tmp/
 .DS_Store
 
-webkitbuilds/
 cache/
+app/images/app-tray.png
+bower_components/

@@ -17,6 +17,7 @@
   },
   "chromium-args": "--child-clean-exit",
   "dependencies": {
+    "favico.js": "^0.3.8",
     "get-uri": "^0.1.3",
     "underscore": "^1.7.0"
   }
