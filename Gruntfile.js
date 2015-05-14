@@ -13,6 +13,7 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		nodewebkit: {
 			options: {
+				version: '0.12.1',
 				platforms: ['linux64'],
 				buildDir: './webkitbuilds' // Where the build version of my node-webkit app is saved
 			},
