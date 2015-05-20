@@ -51,7 +51,7 @@ npm install
 ####Run It
 
 ```
-./run.js
+npm start
 ```
 
 Issues
