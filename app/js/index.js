@@ -5,8 +5,9 @@
 	var url = require('url');
 	var _ = require('underscore');
 	var getUri = require('get-uri');
+	// DEV: Relative paths are from perspective of `views/index.html` for `index.js`
 	var SlackWindow = require('../js/slack-window.js');
-	var pkg = require('../package.json');
+	var pkg = require('../../package.json');
 
 	var LOCAL_STORAGE_KEY_CURRENT_DOMAIN = 'currentDomain';
 	var SLACK_DOMAIN = 'slack.com';
