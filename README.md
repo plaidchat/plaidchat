@@ -64,3 +64,6 @@ machines. If you run into
 ```
 
 Give [Issue #1](https://github.com/slack-for-linux/slack-for-linux/issues/1) a look.
+
+
+[![Analytics](https://ga-beacon.appspot.com/UA-63524506-1/slack-for-linux/read-me)](https://github.com/igrigorik/ga-beacon)
