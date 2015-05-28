@@ -39,18 +39,23 @@
 		console.log('Allowing browser to handle: ' + JSON.stringify(openRequest));
 	});
 
-	var isMinimized = false;
-	win.on('minimize', function () {
-		isMinimized = true;
+	gui.App.on('open', function (cmdline) {
+		runningInTray = false;
+		win.show();
 	});
-	win.on('restore', function () {
-		isMinimized = false;
+
+	var runningInTray = false;
+	win.on('close', function () {
+		runningInTray = true;
+		this.hide();
 	});
-	function toggleVisibility() {
-		if (isMinimized) {
-			win.restore();
+	function toggleTray() {
+		if (runningInTray) {
+			runningInTray = false;
+			win.show();
 		} else {
-			win.minimize();
+			runningInTray = true;
+			win.hide();
 		}
 	}
 
@@ -58,12 +63,12 @@
 	var tray = new gui.Tray({
 		title: pkg.window.title,
 		icon: trayIcon, // Relative to `package.json`
-		click: toggleVisibility
+		click: toggleTray
 	});
 	var trayMenu = new gui.Menu();
 	trayMenu.append(new gui.MenuItem({
 		label: 'Show/Hide window',
-		click: toggleVisibility
+		click: toggleTray
 	}));
 	trayMenu.append(new gui.MenuItem({
 		type: 'separator'
