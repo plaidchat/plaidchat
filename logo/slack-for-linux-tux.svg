@@ -16,7 +16,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="slack-for-linux-tux.svg">
+   sodipodi:docname="slack-for-linux-tux.svg"
+   inkscape:export-filename="/home/will/rect9348.png"
+   inkscape:export-xdpi="30"
+   inkscape:export-ydpi="30">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -50,12 +53,25 @@
     </rdf:RDF>
   </metadata>
   <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="background">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.96200001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect9348"
+       width="1536"
+       height="1536"
+       x="-683.5014"
+       y="-492.20923"
+       ry="0.85714203" />
+  </g>
+  <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
     <g
        id="g8492"
-       transform="translate(-442.85714,37.142857)">
+       transform="matrix(1.0855221,0,0,1.0855221,-308.63852,214.29818)">
       <path
          id="path5098"
          d="m 923.28284,549.73266 c 0,87.46752 -141.81302,158.37572 -316.74806,158.37572 -174.93166,0 -316.74469,-70.90483 -316.74469,-158.37572 0,-87.4709 141.81303,-158.37572 316.74469,-158.37572 174.93166,0.003 316.74806,70.9082 316.74806,158.37572 z"
