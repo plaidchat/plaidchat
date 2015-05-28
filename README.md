@@ -63,4 +63,4 @@ machines. If you run into
 ./resources/node-webkit/Linux64/nw: error while loading shared libraries: libudev.so.0: cannot open shared object file: No such file or directory
 ```
 
-Give [Issue #1](https://github.com/wlaurance/slack-for-linux/issues/1) a look.
+Give [Issue #1](https://github.com/slack-for-linux/slack-for-linux/issues/1) a look.

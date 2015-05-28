@@ -7,8 +7,8 @@
     "linux",
     "node-webkit"
   ],
-  "homepage": "https://github.com/wlaurance/slack-for-linux",
-  "bugs": "https://github.com/wlaurance/slack-for-linux/issues",
+  "homepage": "https://github.com/slack-for-linux/slack-for-linux",
+  "bugs": "https://github.com/slack-for-linux/slack-for-linux/issues",
   "author": {
     "name": "Will Laurance",
     "email": "",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/wlaurance/slack-for-linux"
+    "url": "git://github.com/slack-for-linux/slack-for-linux"
   },
   "main": "app/views/index.html",
   "dependencies": {
