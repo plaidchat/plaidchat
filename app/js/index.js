@@ -1,14 +1,17 @@
 (function () {
 	'use strict';
+	// Load in our dependencies
 	var fs = require('fs');
 	var gui = require('nw.gui');
 	var url = require('url');
 	var _ = require('underscore');
 	var getUri = require('get-uri');
+	var program = require('commander');
 	// DEV: Relative paths are from perspective of `views/index.html` for `index.js`
 	var SlackWindow = require('../js/slack-window.js');
 	var pkg = require('../../package.json');
 
+	// Define our constants
 	var LOCAL_STORAGE_KEY_CURRENT_DOMAIN = 'currentDomain';
 	var SLACK_DOMAIN = 'slack.com';
 	var SLACK_LOGIN_URL = 'https://slack.com/signin';
@@ -17,6 +20,14 @@
 	var win = gui.Window.get();
 	var validSlackSubdomain = /(.+)\.slack.com/i;
 	var slackDownloadHostname = 'files.slack.com';
+
+	// Interpet our CLI arguments
+	// DEV: We need to coerce `nw.js'` arguments as `commander` expects normal (`['node', 'slack-for-linux', '--help']`)
+	//   but `nw.js` only provides arguments themselves (e.g. `--help`)
+	var argv = ['nw', pkg.name].concat(gui.App.argv);
+	program
+		.version(pkg.version)
+		.parse(argv);
 
 	win.on('new-win-policy', function (frame, urlStr, policy) {
 		// Determine where the request is to

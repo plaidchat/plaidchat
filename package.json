@@ -20,6 +20,7 @@
   },
   "main": "app/views/index.html",
   "dependencies": {
+    "commander": "^2.8.1",
     "favico.js": "^0.3.8",
     "get-uri": "^0.1.3",
     "nw": "0.12.1",
