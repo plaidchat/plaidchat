@@ -19,8 +19,9 @@
 	//   but `nw.js` only provides arguments themselves (e.g. `--help`)
 	var argv = ['nw', pkg.name].concat(gui.App.argv);
 	program
-			.version(pkg.version)
-			.parse(argv);
+		.version(pkg.version)
+		.option('--minimize-to-tray')
+		.parse(argv);
 
 	win.on('new-win-policy', function (frame, urlStr, policy) {
 		// Determine where the request is to
@@ -43,14 +44,44 @@
 		console.debug('Allowing browser to handle: ' + JSON.stringify(openRequest));
 	});
 
-	// Keep track of minimization
-	var isMinimized = false;
+	var isHidden = false;
+
+	win.on('hide', function () {
+		isHidden = true;
+	});
 	win.on('minimize', function () {
-		isMinimized = true;
+		isHidden = true;
+	});
+	win.on('show', function () {
+		isHidden = false;
 	});
 	win.on('restore', function () {
-		isMinimized = false;
+		isHidden = false;
 	});
+
+	var windowShowCommand = program.minimizeToTray ? 'show' : 'restore';
+	var windowHideCommand = program.minimizeToTray ? 'hide' : 'minimize';
+
+	function showWindow() {
+		win[windowShowCommand]();
+		isHidden = false;
+	};
+	function hideWindow() {
+		win[windowHideCommand]();
+		isHidden = true;
+	};
+
+  gui.App.on('open', function (cmdline) {
+		showWindow();
+  });
+
+	function toggleVisibility() {
+		if (isHidden) {
+			showWindow();
+		} else {
+			hideWindow();
+		}
+	}
 
 	// Define a global set of controls for `plaidchat`
 	var plaidchat = {
