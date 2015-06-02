@@ -1,4 +1,4 @@
-slack-for-linux [![Build Status](https://travis-ci.org/wlaurance/slack-for-linux.svg?branch=master)](https://travis-ci.org/wlaurance/slack-for-linux)
+slack-for-linux [![Build Status](https://travis-ci.org/slack-for-linux/slack-for-linux.svg?branch=master)](https://travis-ci.org/slack-for-linux/slack-for-linux)
 =============
 
 Slack client for linux 64. Uses Node Webkit
@@ -39,7 +39,7 @@ Running and Developing
 ####Clone the repo
 
 ```
-git clone git@github.com:wlaurance/slack-for-linux.git && cd slack-for-linux
+git clone git@github.com:slack-for-linux/slack-for-linux.git && cd slack-for-linux
 ```
 
 ####Install deps
