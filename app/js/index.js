@@ -28,6 +28,7 @@
 	program
 		.version(pkg.version)
 		.option('--minimize-to-tray')
+		.option('--close-to-tray')
 		.parse(argv);
 
 	win.on('new-win-policy', function (frame, urlStr, policy) {
@@ -66,8 +67,9 @@
 		isHidden = false;
 	});
 
-	var windowShowCommand = program.minimizeToTray ? 'show' : 'restore';
-	var windowHideCommand = program.minimizeToTray ? 'hide' : 'minimize';
+	var hideWanted = program.minimizeToTray || program.closeToTray;
+	var windowShowCommand = hideWanted ? 'show' : 'restore';
+	var windowHideCommand = hideWanted ? 'hide' : 'minimize';
 
 	function showWindow() {
 		win[windowShowCommand]();
@@ -81,6 +83,10 @@
   gui.App.on('open', function (cmdline) {
 		showWindow();
   });
+
+  if (program.closeToTray) {
+		win.on('close', hideWindow);
+  }
 
 	function toggleVisibility() {
 		if (isHidden) {
