@@ -6,11 +6,11 @@ https://github.com/slack-for-linux/slack-for-linux/issues
 If no issues are found, please include an explanatory subject and description that gives us context into:
 
 - If this is a bug
-    - Problem being seen (e.g. after loading `slack-for-linux`, I see a white screen)
-    - Expected behavior (e.g. after loading `slack-for-linux`, I should see Slack's normal interface)
-    - Information about OS (e.g. `node --version`, `npm --version`, Ubuntu 14.04)
+	- Problem being seen (e.g. after loading `slack-for-linux`, I see a white screen)
+	- Expected behavior (e.g. after loading `slack-for-linux`, I should see Slack's normal interface)
+	- Information about OS (e.g. `node --version`, `npm --version`, Ubuntu 14.04)
 - If this is an enhancement/discussion
-    - Provide details about behavior or context (e.g. adding linting to repo)
+	- Provide details about behavior or context (e.g. adding linting to repo)
 
 # Pull requests
 When opening a pull request:
