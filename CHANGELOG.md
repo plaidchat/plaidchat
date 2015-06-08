@@ -1,5 +1,8 @@
 ## slack-for-linux changelog
 
+### v1.5.2 (2015/06/08 21:51 +00:00)
+- [#73](https://github.com/slack-for-linux/slack-for-linux/pull/73) Add trailing newline character after github-changes (@wlaurance)
+
 ### v1.5.1 (2015/06/08 21:27 +00:00)
 - [#72](https://github.com/slack-for-linux/slack-for-linux/pull/72) Added release script (@twolfson)
 - [#70](https://github.com/slack-for-linux/slack-for-linux/pull/70) Fixed up lint errors (@twolfson)
