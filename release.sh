@@ -30,6 +30,9 @@ semver="$(node --eval "console.log('v' + require('./package.json').version);")"
 	--owner slack-for-linux --repository slack-for-linux \
 	--only-pulls --use-commit-body -n "$semver"
 
+# DEV: Add trailing newline for linter
+echo >> CHANGELOG.md
+
 # Append our CHANGELOG edit to the git commit
 git add CHANGELOG.md
 git commit --amend --no-edit
