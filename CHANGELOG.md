@@ -1,5 +1,9 @@
 ## slack-for-linux changelog
 
+### v1.5.1 (2015/06/08 21:27 +00:00)
+- [#72](https://github.com/slack-for-linux/slack-for-linux/pull/72) Added release script (@twolfson)
+- [#70](https://github.com/slack-for-linux/slack-for-linux/pull/70) Fixed up lint errors (@twolfson)
+
 ### v1.5.0 (2015/06/02 23:17 +00:00)
 - [#64](https://github.com/slack-for-linux/slack-for-linux/pull/64) Added argument passing to slack-for-linux (@twolfson)
 - [#67](https://github.com/slack-for-linux/slack-for-linux/pull/67) Added CONTRIBUTING.md (@twolfson)
