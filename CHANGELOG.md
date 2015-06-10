@@ -1,5 +1,8 @@
 ## slack-for-linux changelog
 
+### v1.6.1 (2015/06/10 08:02 +00:00)
+- [#74](https://github.com/slack-for-linux/slack-for-linux/pull/74) Fix notification audio (@bronzdoc)
+
 ### v1.5.2 (2015/06/08 21:51 +00:00)
 - [#73](https://github.com/slack-for-linux/slack-for-linux/pull/73) Add trailing newline character after github-changes (@wlaurance)
 
