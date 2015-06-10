@@ -34,7 +34,8 @@
   ],
   "scripts": {
     "start": "node ./run.js",
-    "test": "grunt lint"
+    "test": "grunt lint",
+    "postinstall": "./postinstall.sh"
   },
   "bin": {
     "slack-for-linux": "./run.js"
