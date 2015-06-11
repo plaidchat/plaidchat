@@ -75,6 +75,16 @@ Get started by finding an issue with the "help wanted" label and submitting a pu
 
 https://github.com/slack-for-linux/slack-for-linux/issues?q=label%3A%22help+wanted%22
 
+License
+=======
+`slack-for-linux` is licensed under the [MIT license][].
+
+Upon installation, we may copy `libffmpegsumo.so` from `/opt/google/chrome` (from [ffmpeg][]) into our repository. We are required to mention that this file is licensed under the [GPL license][ffmpeg-license].
+
+[MIT License]: LICENSE
+[ffmpeg]: http://ffmpeg.org/
+[ffmpeg-license]: docs/ffmpeg-license.txt
+
 ------------
 
 [![Analytics](https://ga-beacon.appspot.com/UA-63524506-1/slack-for-linux/read-me)](https://github.com/igrigorik/ga-beacon)
