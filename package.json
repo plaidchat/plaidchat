@@ -1,6 +1,6 @@
 {
   "name": "slack-for-linux",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Slack client for linux",
   "keywords": [
     "slack",
