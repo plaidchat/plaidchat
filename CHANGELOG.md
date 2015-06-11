@@ -1,5 +1,8 @@
 ## slack-for-linux changelog
 
+### v1.6.3 (2015/06/11 06:03 +00:00)
+- [#78](https://github.com/slack-for-linux/slack-for-linux/pull/78) Added license information (@twolfson)
+
 ### v1.6.1 (2015/06/10 08:02 +00:00)
 - [#74](https://github.com/slack-for-linux/slack-for-linux/pull/74) Fix notification audio (@bronzdoc)
 
