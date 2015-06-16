@@ -1,7 +1,7 @@
 plaidchat [![Build Status](https://travis-ci.org/plaidchat/plaidchat.svg?branch=master)](https://travis-ci.org/plaidchat/plaidchat)
 =============
 
-Slack client for Linux. Uses [nw.js][].
+A Slack client for Linux. Uses [nw.js][].
 
 **Features:**
 
@@ -34,6 +34,8 @@ Then you can run your client from your terminal of choice.
 ```bash
 plaidchat
 ```
+
+`plaidchat` is not created by, affiliated with, or supported by Slack Technologies, Inc.
 
 Running and Developing
 ======================
