@@ -42,7 +42,7 @@
 			// DEV: tinyspeck is Slack's company name, this is likely an in-house framework
 			var win = that.getWindow();
 			var TS = that.getTS();
-			if (TS && !win._slackForLinuxBoundListeners) {
+			if (TS && !win._plaidchatBoundListeners) {
 				// http://viewsource.in/https://slack.global.ssl.fastly.net/31971/js/rollup-client_1420067921.js#L6413-6419
 				// DEV: This is the same list that is used for growl notifications (`TS.ui.growls`)
 				var emitNotificationUpdate = function () {
@@ -64,7 +64,7 @@
 				if (TS.client) {
 					sig = TS.client.login_sig; if (sig) { sig.add(emitNotificationUpdate); }
 				}
-				win._slackForLinuxBoundListeners = true;
+				win._plaidchatBoundListeners = true;
 			}
 		});
 	}

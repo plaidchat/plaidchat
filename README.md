@@ -1,4 +1,4 @@
-slack-for-linux [![Build Status](https://travis-ci.org/slack-for-linux/slack-for-linux.svg?branch=master)](https://travis-ci.org/slack-for-linux/slack-for-linux)
+plaidchat [![Build Status](https://travis-ci.org/plaidchat/plaidchat.svg?branch=master)](https://travis-ci.org/plaidchat/plaidchat)
 =============
 
 Slack client for Linux. Uses [nw.js][].
@@ -18,13 +18,13 @@ Installing
 
 1) [Install Node.js](http://nodejs.org/download/). If Node.js is already installed, please continue.
 
-2) Install `slack-for-linux` via `npm`
+2) Install `plaidchat` via `npm`
 
 ```bash
-npm install slack-for-linux -g
+npm install plaidchat -g
 ```
 
-3) Run `slack-for-linux`
+3) Run `plaidchat`
 
 If you have setup correctly, the above command will install the package
 somewhere in your path.
@@ -32,7 +32,7 @@ somewhere in your path.
 Then you can run your client from your terminal of choice.
 
 ```bash
-slack-for-linux
+plaidchat
 ```
 
 Running and Developing
@@ -41,7 +41,7 @@ Running and Developing
 #### Clone the repo
 
 ```bash
-git clone git@github.com:slack-for-linux/slack-for-linux.git && cd slack-for-linux
+git clone git@github.com:plaidchat/plaidchat.git && cd plaidchat
 ```
 
 #### Install dependencies
@@ -65,7 +65,7 @@ machines. If you run into
 ./resources/node-webkit/Linux64/nw: error while loading shared libraries: libudev.so.0: cannot open shared object file: No such file or directory
 ```
 
-Give [Issue #1](https://github.com/slack-for-linux/slack-for-linux/issues/1) a look.
+Give [Issue #1](https://github.com/plaidchat/plaidchat/issues/1) a look.
 
 Contributing
 ============
@@ -73,11 +73,11 @@ Interested in contributing? Great, we are always looking for more great people.
 
 Get started by finding an issue with the "help wanted" label and submitting a pull request.
 
-https://github.com/slack-for-linux/slack-for-linux/issues?q=label%3A%22help+wanted%22
+https://github.com/plaidchat/plaidchat/issues?q=label%3A%22help+wanted%22
 
 License
 =======
-`slack-for-linux` is licensed under the [MIT license][].
+`plaidchat` is licensed under the [MIT license][].
 
 Upon installation, we may copy `libffmpegsumo.so` from `/opt/google/chrome` (from [ffmpeg][]) into our repository. We are required to mention that this file is licensed under the [GPL license][ffmpeg-license].
 

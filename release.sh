@@ -26,8 +26,8 @@ npm version "$version"
 semver="$(node --eval "console.log('v' + require('./package.json').version);")"
 
 # Generate a new CHANGELOG
-./node_modules/.bin/github-changes --title "slack-for-linux changelog" \
-	--owner slack-for-linux --repository slack-for-linux \
+./node_modules/.bin/github-changes --title "plaidchat changelog" \
+	--owner plaidchat --repository plaidchat \
 	--only-pulls --use-commit-body -n "$semver"
 
 # DEV: Add trailing newline for linter

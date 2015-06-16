@@ -15,14 +15,14 @@
 	var LOCAL_STORAGE_KEY_CURRENT_DOMAIN = 'currentDomain';
 	var SLACK_DOMAIN = 'slack.com';
 	var SLACK_LOGIN_URL = 'https://slack.com/signin';
-	var webslack = {};
+	var plaidchat = {};
 
 	var win = gui.Window.get();
 	var validSlackSubdomain = /(.+)\.slack.com/i;
 	var slackDownloadHostname = 'files.slack.com';
 
 	// Interpet our CLI arguments
-	// DEV: We need to coerce `nw.js'` arguments as `commander` expects normal (`['node', 'slack-for-linux', '--help']`)
+	// DEV: We need to coerce `nw.js'` arguments as `commander` expects normal (`['node', 'plaidchat', '--help']`)
 	//   but `nw.js` only provides arguments themselves (e.g. `--help`)
 	var argv = ['nw', pkg.name].concat(gui.App.argv);
 	program
@@ -94,7 +94,7 @@
 		element: trayIconImg,
 		dataUrl: function (dataUrl) {
 			// Generate a location to save the image
-			var filepath = process.env.HOME + '/.slack-for-linux-tray.png';
+			var filepath = process.env.HOME + '/.plaidchat-tray.png';
 
 			// Convert the image to a stream
 			getUri(dataUrl, function handleData (err, dataStream) {
@@ -126,7 +126,7 @@
 	}
 
 	// On the initial page load
-	webslack.load = function () {
+	plaidchat.load = function () {
 		function newLocationToProcess(locationToProcess) {
 			var locationHostname = url.parse(locationToProcess).hostname;
 
@@ -170,7 +170,7 @@
 		// When the window loads
 		activeWindow.on('teams-loaded', function handleLoad () {
 			// Gather team info
-			// team = {id:, name: "slack-for-linux test", email_domain: mailinator.com, domain: account name,
+			// team = {id:, name: "plaidchat test", email_domain: mailinator.com, domain: account name,
 			//   msg_edit_window_mins, prefs: {default_channels, ...},
 			//   icon: {image_34: http://url/34.png, image_{44,68,88,102,132}, image_default: true},
 			//   over_storage_limit, plan, url: wss://ms144.slack-msgs.com, activity}
@@ -299,5 +299,5 @@
 		});
 	};
 
-	window.webslack = webslack;
+	window.plaidchat = plaidchat;
 })();
