@@ -8,3 +8,5 @@ Please see the `plaidchat` repository for the latest version and installation in
 https://github.com/plaidchat/plaidchat
 
 [rename-issue]: https://github.com/plaidchat/plaidchat/issues/79
+
+Both `slack-for-linux` and `plaidchat` are not created by, affiliated with, or supported by Slack Technologies, Inc.
