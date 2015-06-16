@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.0.1 (2015/06/16 03:06 +00:00)
+- [#81](https://github.com/plaidchat/plaidchat/pull/81) Added affiliation notice (@twolfson)
+
 ### v2.0.0 (2015/06/16 02:56 +00:00)
 - [#80](https://github.com/plaidchat/plaidchat/pull/80) Updated all references from slack-for-linux to plaidchat (@twolfson)
 - [#75](https://github.com/plaidchat/plaidchat/pull/75) Added commit and feature notes for pull requests to CONTRIBUTING.md (@twolfson)
