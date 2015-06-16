@@ -1,5 +1,9 @@
 ## plaidchat changelog
 
+### v2.0.0 (2015/06/16 02:56 +00:00)
+- [#80](https://github.com/plaidchat/plaidchat/pull/80) Updated all references from slack-for-linux to plaidchat (@twolfson)
+- [#75](https://github.com/plaidchat/plaidchat/pull/75) Added commit and feature notes for pull requests to CONTRIBUTING.md (@twolfson)
+
 ### v1.6.3 (2015/06/11 06:03 +00:00)
 - [#78](https://github.com/plaidchat/plaidchat/pull/78) Added license information (@twolfson)
 
@@ -14,7 +18,7 @@
 - [#70](https://github.com/plaidchat/plaidchat/pull/70) Fixed up lint errors (@twolfson)
 
 ### v1.5.0 (2015/06/02 23:17 +00:00)
-- [#64](https://github.com/plaidchat/plaidchat/pull/64) Added argument passing to plaidchat (@twolfson)
+- [#64](https://github.com/plaidchat/plaidchat/pull/64) Added argument passing to slack-for-linux (@twolfson)
 - [#67](https://github.com/plaidchat/plaidchat/pull/67) Added CONTRIBUTING.md (@twolfson)
 - [#63](https://github.com/plaidchat/plaidchat/pull/63) Remove line from readme (@wlaurance)
 
