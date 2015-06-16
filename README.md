@@ -5,7 +5,7 @@ slack-for-linux
 
 Please see the `plaidchat` repository for the latest version and installation information.
 
-https://github.com/plaidchat/plaidchat
+<https://github.com/plaidchat/plaidchat>
 
 [rename-issue]: https://github.com/plaidchat/plaidchat/issues/79
 
