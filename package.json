@@ -1,14 +1,14 @@
 {
-  "name": "slack-for-linux",
+  "name": "plaidchat",
   "version": "1.6.3",
-  "description": "Slack client for linux",
+  "description": "A Linux client for Slack",
   "keywords": [
     "slack",
     "linux",
     "node-webkit"
   ],
-  "homepage": "https://github.com/slack-for-linux/slack-for-linux",
-  "bugs": "https://github.com/slack-for-linux/slack-for-linux/issues",
+  "homepage": "https://github.com/plaidchat/plaidchat",
+  "bugs": "https://github.com/plaidchat/plaidchat/issues",
   "author": {
     "name": "Will Laurance",
     "email": "",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/slack-for-linux/slack-for-linux"
+    "url": "git://github.com/plaidchat/plaidchat"
   },
   "main": "app/views/index.html",
   "dependencies": {
@@ -38,7 +38,7 @@
     "postinstall": "./postinstall.sh"
   },
   "bin": {
-    "slack-for-linux": "./run.js"
+    "plaidchat": "./run.js"
   },
   "devDependencies": {
     "github-changes": "^1.0.0",
@@ -50,7 +50,7 @@
   },
   "single-instance": true,
   "window": {
-    "title": "Slack for Linux",
+    "title": "plaidchat",
     "icon": "./images/app-256.png",
     "width": 650,
     "height": 650,
