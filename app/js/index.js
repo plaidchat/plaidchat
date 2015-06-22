@@ -27,6 +27,8 @@
 	var argv = ['nw', pkg.name].concat(gui.App.argv);
 	program
 		.version(pkg.version)
+		.option('--minimize-to-tray')
+		.option('--close-to-tray')
 		.parse(argv);
 
 	win.on('new-win-policy', function (frame, urlStr, policy) {
@@ -50,18 +52,47 @@
 		console.log('Allowing browser to handle: ' + JSON.stringify(openRequest));
 	});
 
-	var isMinimized = false;
+	var isHidden = false;
+
+	win.on('hide', function () {
+		isHidden = true;
+	});
 	win.on('minimize', function () {
-		isMinimized = true;
+		isHidden = true;
+	});
+	win.on('show', function () {
+		isHidden = false;
 	});
 	win.on('restore', function () {
-		isMinimized = false;
+		isHidden = false;
 	});
+
+	var hideWanted = program.minimizeToTray || program.closeToTray;
+	var windowShowCommand = hideWanted ? 'show' : 'restore';
+	var windowHideCommand = hideWanted ? 'hide' : 'minimize';
+
+	function showWindow() {
+		win[windowShowCommand]();
+		isHidden = false;
+	};
+	function hideWindow() {
+		win[windowHideCommand]();
+		isHidden = true;
+	};
+
+  gui.App.on('open', function (cmdline) {
+		showWindow();
+  });
+
+  if (program.closeToTray) {
+		win.on('close', hideWindow);
+  }
+
 	function toggleVisibility() {
-		if (isMinimized) {
-			win.restore();
+		if (isHidden) {
+			showWindow();
 		} else {
-			win.minimize();
+			hideWindow();
 		}
 	}
 
