@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.1.0 (2015/06/22 02:52 +00:00)
+- [#84](https://github.com/plaidchat/plaidchat/pull/84) Fix path to app icon (@kjvalencik)
+
 ### v2.0.1 (2015/06/16 03:06 +00:00)
 - [#81](https://github.com/plaidchat/plaidchat/pull/81) Added affiliation notice (@twolfson)
 
