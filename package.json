@@ -51,7 +51,7 @@
   "single-instance": true,
   "window": {
     "title": "plaidchat",
-    "icon": "./images/app-256.png",
+    "icon": "./app/images/app-256.png",
     "width": 650,
     "height": 650,
     "min_width": 650,
