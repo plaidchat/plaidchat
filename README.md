@@ -58,6 +58,34 @@ npm install
 npm start
 ```
 
+Application structure
+=====================
+Our application is built on top of [React][] and [Flux][]. The folders for our application are:
+
+- app/ - Container for our application
+	- css/ - CSS for our application
+	- components/ - Container for different React components
+	- dispatchers/ - Container for Flux dispatchers
+	- js/ - JS that handle `nw.js` setup and initial loading of React
+	- stores/ - Container for Flux stores
+	- views/ - HTML pages loaded by `nw.js`
+
+[React]: https://github.com/facebook/react
+[Flux]: http://github.com/facebook/flux
+
+With the [Flux][] infrastructure, all our data flows one-way; from components to dispatchers to stores to components (and repeat).
+
+- Components manage the DOM and rendering other components
+	- From the MVC perspective, it's a hybrid of controllers/views
+- Dispatchers manage passing through events from components to stores
+	- These are more/less global single-channel mediators
+- Stores manage internal application data and emit events on change
+	- These are a hybrid of models/controllers as they both save state as well as manage its updates
+
+More information can be read in the Flux documentation:
+
+<http://facebook.github.io/flux/>
+
 Issues
 ======
 [JBKahn](https://github.com/JBKahn) Pointed out that libudev.so differs on different

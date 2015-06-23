@@ -5,6 +5,10 @@
   <link rel="stylesheet" href="../css/main.css" />
   <!-- DEV: favico.js is required to be loaded via `script` due to window properties like navigator not existing -->
   <script src="../../node_modules/favico.js/favico.js"></script>
+  <!-- We must use a special flavor of React with support for `nw.js` HTML attributes -->
+  <script src="../../dist/js/react.js"></script>
+  <!-- DEV: AppTray needs to be loaded with access to `nw.gui` -->
+  <script src="../components/app-tray.js" ></script>
   <script src="../js/index.js" ></script>
 </head>
 <body>
