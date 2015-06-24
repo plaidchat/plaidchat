@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.2.1 (2015/06/24 03:08 +00:00)
+- [#88](https://github.com/plaidchat/plaidchat/pull/88) Added FAQ section for crashing on direct message (@twolfson)
+
 ### v2.2.0 (2015/06/24 02:32 +00:00)
 - [#85](https://github.com/plaidchat/plaidchat/pull/85) Moved from vanilla JS to React (@twolfson)
 
