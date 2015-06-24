@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.2.0 (2015/06/24 02:32 +00:00)
+- [#85](https://github.com/plaidchat/plaidchat/pull/85) Moved from vanilla JS to React (@twolfson)
+
 ### v2.1.0 (2015/06/22 02:52 +00:00)
 - [#84](https://github.com/plaidchat/plaidchat/pull/84) Fix path to app icon (@kjvalencik)
 
