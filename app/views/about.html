@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>plaidchat - about</title>
+  <style>
+    /* https://github.com/corysimmons/typographic/blob/2.9.3/scss/typographic.scss#L34 */
+    body {
+      text-align: center;
+      font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+    }
+  </style>
+</head>
+<body>
+  <script>
+    window.pkg = require('../../package.json');
+  </script>
+  <div>
+    <h1>plaidchat</h1>
+    <p>
+      <!-- DEV: Rather than importing a template language or generating all copy from HTML, we are using a hack to write out the document as it's parsed via JavaScript -->
+      Version: <script>document.write(pkg.version);</script>
+      <br/>
+      nw.js version: <script>document.write(process.versions['node-webkit']);</script>
+      <br/>
+      Chromium version: <script>document.write(process.versions.chromium);</script>
+    </p>
+  </div>
+</body>
+</html>

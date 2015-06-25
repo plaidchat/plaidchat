@@ -4,6 +4,7 @@
 	var gui = require('nw.gui');
 	var url = require('url');
 	var program = require('commander');
+	var AppMenu = window.AppMenu;
 	var React = window.React;
 	// DEV: Relative paths are resolved from `views/index.html`
 	var SlackApplication = require('../components/slack-application');
@@ -58,8 +59,15 @@
 			console.debug('Exiting plaidchat...');
 			process.exit();
 		},
+		// Method to reload our window
+		reload: function () {
+			win.reload();
+		},
 		// Method to start our application
 		load: function () {
+			// Bind our app menu to the window
+			AppMenu.bindTo(win);
+
 			// Setup initial team
 			SlackApplication.loadInitialTeams();
 
@@ -67,6 +75,21 @@
 			var slackApp = React.createElement(SlackApplication, null);
 			plaidchat.app = React.render(slackApp, document.body);
 			console.debug('Starting application...');
+		},
+		openAboutWindow: function () {
+			gui.Window.open('about.html', {
+				height: 200,
+				width: 400,
+				toolbar: false
+			});
+		},
+		// Method to open our dev tools (hooray development :tada:)
+		toggleDevTools: function () {
+			if (win.isDevToolsOpen()) {
+				win.closeDevTools();
+			} else {
+				win.showDevTools();
+			}
 		},
 		// Method to toggle window visibility
 		toggleVisibility: function () {
