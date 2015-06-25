@@ -6,6 +6,7 @@
 	var React = window.React;
 	var AppDispatcher = require('../dispatchers/app');
 	var SlackWindow = require('./slack-window');
+	var NotificationStore = require('../stores/notification');
 	var TeamStore = require('../stores/team');
 	var TeamSidebar = require('./team-sidebar');
 
@@ -18,6 +19,7 @@
 	function getStateFromStores() {
 		return {
 			activeTeamId: TeamStore.getActiveTeamId(),
+			notificationsByTeamId: NotificationStore.getNotificationsByTeamId(),
 			teams: TeamStore.getTeams(),
 			teamsById: TeamStore.getTeamsById(),
 			teamIndicies: TeamStore.getTeamIndicies(),
@@ -33,10 +35,12 @@
 		// When our application loads/unloads start/stop listening for change events in our teams
 		//   and load/unload non-react components (e.g. Tray)
 		componentDidMount: function () {
+			NotificationStore.addChangeListener(this._onChange);
 			TeamStore.addChangeListener(this._onChange);
 			AppTray.mount();
 		},
 		componentWillUnmount: function () {
+			NotificationStore.removeChangeListener(this._onChange);
 			TeamStore.removeChangeListener(this._onChange);
 			AppTray.unmount();
 		},
@@ -70,7 +74,7 @@
 			}, [
 				React.createElement(TeamSidebar, _.defaults({
 					key: 'sidebar'
-				}, _.pick(this.state, 'activeTeamId', 'teams', 'teamIcons', 'teamIndicies'))),
+				}, _.pick(this.state, 'activeTeamId', 'notificationsByTeamId', 'teams', 'teamIcons', 'teamIndicies'))),
 				React.DOM.div({
 					className: 'slack-window-container',
 					key: 'window-container'
