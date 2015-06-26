@@ -18,7 +18,11 @@ module.exports = function (grunt) {
 			}
 		},
 		lintspaces: {
-			src: ['*', 'app/**/*', '!**/*.png'],
+			src: [
+				'*', 'app/**/*',
+				'!**/*.png', // Exclude images to prevent odd errors
+				'!README.md' // Exclude README due to CLI indentation
+			],
 			options: {
 				editorconfig: '.editorconfig'
 			}
