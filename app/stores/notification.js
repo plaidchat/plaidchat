@@ -48,6 +48,9 @@
 			// ['xyz'].forEach(unsetTeamNotifications)
 			Object.keys(excessTeamNotifications).forEach(this.unsetTeamNotifications);
 		},
+		getNotificationsByTeamId: function () {
+			return _.clone(_state.notificationsByTeamId);
+		},
 		getNotificationTotal: function () {
 			var notificationCounts = _.values(_state.notificationsByTeamId);
 			return notificationCounts.reduce(function sumNotificationCounts (sum, notificationCount) {

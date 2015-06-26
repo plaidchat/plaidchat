@@ -1,3 +1,4 @@
+/* Base styles */
 html, body {
 	width: 100%;
 	height: 100%;
@@ -7,7 +8,48 @@ html, body {
 	overflow: hidden;
 }
 
-/* Application specific classes */
+body {
+	/* http://viewsource.in/https://slack.global.ssl.fastly.net/8607/style/rollup-client_secondary.css#L251 */
+	font-family: 'Emoji Passthrough', Lato, appleLogo, sans-serif;
+}
+
+a {
+	color: inherit;
+}
+
+/* Generic components/classes */
+.badge-container {
+	position: relative;
+}
+
+.badge {
+	position: absolute;
+	/* Position in upper right at midpoint of badge */
+	right: -9px;
+	top: -9px;
+	/* Paint our badge red */
+	/* http://viewsource.in/https://slack.global.ssl.fastly.net/c239/style/rollup-client_secondary.css#L2536 */
+	background: #eb4d5c;
+	/* Make a square badge */
+	width: 18px;
+	height: 18px;
+	/* Make our badge circular */
+	border-radius: 9px;
+	/* Adjust find sizings to line up */
+	font-size: 14px;
+	line-height: 18px; /* Same as width/height */
+}
+
+.icon--small {
+	/* http://viewsource.in/https://slack.global.ssl.fastly.net/c239/style/rollup-client_secondary.css#L1070 */
+	border-radius: 0.2rem;
+
+	/* Scale down to be same size as user icons */
+	height: 36px;
+	width: 36px;
+}
+
+/* Application specific components/classes */
 /* Application container */
 .slack-application {
 	display: flex;
@@ -25,24 +67,11 @@ html, body {
 	text-align: center;
 }
 
-.team-sidebar a {
-	color: inherit;
+.team-sidebar__row {
+	margin: 16px 0;
 }
 
-.team-sidebar__item {
-	list-style: none;
-}
-
-.team-sidebar__item img {
-	/* http://viewsource.in/https://slack.global.ssl.fastly.net/c239/style/rollup-client_secondary.css#L1070 */
-	border-radius: 0.2rem;
-
-	/* Scale down to be same size as user icons */
-	height: 36px;
-	width: auto;
-}
-
-.team-sidebar__item--active::before {
+.team-sidebar__row--active::before {
 	display: block;
 	position: absolute;
 	content: '\A0';
@@ -54,6 +83,12 @@ html, body {
 
 	/* Use same border radius as icon for good measure*/
 	border-radius: 0 0.2rem 0.2rem 0;
+}
+
+/* One-off to make badge-container same width as icon--small */
+.team-sidebar__badge-container {
+	width: 36px;
+	margin: 0 auto;
 }
 
 /* Window switcher */
