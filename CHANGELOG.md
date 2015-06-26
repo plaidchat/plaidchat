@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.3.0 (2015/06/26 00:35 +00:00)
+- [#91](https://github.com/plaidchat/plaidchat/pull/91) Added application menu (@twolfson)
+
 ### v2.2.1 (2015/06/24 03:08 +00:00)
 - [#88](https://github.com/plaidchat/plaidchat/pull/88) Added FAQ section for crashing on direct message (@twolfson)
 
