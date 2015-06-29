@@ -19,8 +19,9 @@
 	//   but `nw.js` only provides arguments themselves (e.g. `--help`)
 	var argv = ['nw', pkg.name].concat(gui.App.argv);
 	program
-			.version(pkg.version)
-			.parse(argv);
+		.version(pkg.version)
+		.option('--minimize-to-tray', 'When the tray icon is clicked, hide the window rather than minimize')
+		.parse(argv);
 
 	win.on('new-win-policy', function (frame, urlStr, policy) {
 		// Determine where the request is to
@@ -43,12 +44,14 @@
 		console.debug('Allowing browser to handle: ' + JSON.stringify(openRequest));
 	});
 
-	// Keep track of minimization
+	// Track minimization/hidden state
+	// DEV: isHidden only changes programmatically; there are no events for it
+	var isHidden = false;
 	var isMinimized = false;
-	win.on('minimize', function () {
+	win.on('minimize', function saveMinimization () {
 		isMinimized = true;
 	});
-	win.on('restore', function () {
+	win.on('restore', function saveRestoration () {
 		isMinimized = false;
 	});
 
@@ -91,14 +94,52 @@
 				win.showDevTools();
 			}
 		},
-		// Method to toggle window visibility
-		toggleVisibility: function () {
+
+		// Methods to toggle window visibility
+		_showMinimize: function () {
+			win.restore();
+		},
+		_toggleMinimize: function () {
 			if (isMinimized) {
-				win.restore();
+				plaidchat._showMinimize();
 			} else {
-				win.minimize();
+				win.minimize(); // plaidchat._hideMinimize
+			}
+		},
+		_showHidden: function () {
+			win.show();
+			isHidden = false;
+		},
+		_toggleHidden: function () {
+			if (isMinimized || isHidden) {
+				plaidchat._showHidden();
+			} else {
+				win.hide(); // plaidchat._hideHidden
+				isHidden = true;
+			}
+		},
+		showWindow: function () {
+			if (program.minimizeToTray) {
+				plaidchat._showHidden();
+			} else {
+				plaidchat._showMinimize();
+			}
+		},
+		toggleVisibility: function () {
+			if (program.minimizeToTray) {
+				plaidchat._toggleHidden();
+			} else {
+				plaidchat._toggleMinimize();
 			}
 		}
 	};
+
+	// When `plaidchat` is run and we have an existing window, show the window
+	// DEV: This only works when we have `single-instance: true` set
+	gui.App.on('open', function handleOpen (cmdline) {
+		plaidchat.showWindow();
+	});
+
+	// Expose plaidchat to other modules
 	window.plaidchat = plaidchat;
 })();

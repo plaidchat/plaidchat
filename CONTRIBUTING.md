@@ -6,11 +6,11 @@ https://github.com/plaidchat/plaidchat/issues
 If no issues are found, please include an explanatory subject and description that gives us context into:
 
 - If this is a bug
-	- Problem being seen (e.g. after loading `plaidchat`, I see a white screen)
-	- Expected behavior (e.g. after loading `plaidchat`, I should see Slack's normal interface)
-	- Information about OS (e.g. `node --version`, `npm --version`, Ubuntu 14.04)
+    - Problem being seen (e.g. after loading `plaidchat`, I see a white screen)
+    - Expected behavior (e.g. after loading `plaidchat`, I should see Slack's normal interface)
+    - Information about OS (e.g. `node --version`, `npm --version`, Ubuntu 14.04)
 - If this is an enhancement/discussion
-	- Provide details about behavior or context (e.g. adding linting to repo)
+    - Provide details about behavior or context (e.g. adding linting to repo)
 
 # Pull requests
 When opening a pull request:
@@ -18,9 +18,9 @@ When opening a pull request:
 - If there was an original issue, then please provide a link to
 - Otherwise, please provide description that follows the guidelines from [Issues](#issues)
 - Please focus on 1 feature/patch at a time in a pull request
-	- If multiple features/patches, consider creating multiple pull requests for each one
+    - If multiple features/patches, consider creating multiple pull requests for each one
 - Please collapse/squash new commits in a pull request into 1 commit
-	- If this depends on another pull request, do not collapse/squash that pull request's commit into this one's
+    - If this depends on another pull request, do not collapse/squash that pull request's commit into this one's
 
 # Contributing
 Interested in contributing? Great, we are always looking for more great people.

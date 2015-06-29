@@ -37,6 +37,23 @@ plaidchat
 
 `plaidchat` is not created by, affiliated with, or supported by Slack Technologies, Inc.
 
+CLI options
+===========
+We provide various CLI options via `plaidchat --help`
+
+```bash
+$ plaidchat --help
+
+  Usage: plaidchat [options]
+
+  Options:
+
+    -h, --help          output usage information
+    -V, --version       output the version number
+    --minimize-to-tray  When the tray icon is clicked, hide the window rather than minimize
+
+```
+
 Running and Developing
 ======================
 
@@ -63,12 +80,12 @@ Application structure
 Our application is built on top of [React][] and [Flux][]. The folders for our application are:
 
 - app/ - Container for our application
-	- css/ - CSS for our application
-	- components/ - Container for different React components
-	- dispatchers/ - Container for Flux dispatchers
-	- js/ - JS that handle `nw.js` setup and initial loading of React
-	- stores/ - Container for Flux stores
-	- views/ - HTML pages loaded by `nw.js`
+    - css/ - CSS for our application
+    - components/ - Container for different React components
+    - dispatchers/ - Container for Flux dispatchers
+    - js/ - JS that handle `nw.js` setup and initial loading of React
+    - stores/ - Container for Flux stores
+    - views/ - HTML pages loaded by `nw.js`
 
 [React]: https://github.com/facebook/react
 [Flux]: http://github.com/facebook/flux
@@ -76,11 +93,11 @@ Our application is built on top of [React][] and [Flux][]. The folders for our a
 With the [Flux][] infrastructure, all our data flows one-way; from components to dispatchers to stores to components (and repeat).
 
 - Components manage the DOM and rendering other components
-	- From the MVC perspective, it's a hybrid of controllers/views
+    - From the MVC perspective, it's a hybrid of controllers/views
 - Dispatchers manage passing through events from components to stores
-	- These are more/less global single-channel mediators
+    - These are more/less global single-channel mediators
 - Stores manage internal application data and emit events on change
-	- These are a hybrid of models/controllers as they both save state as well as manage its updates
+    - These are a hybrid of models/controllers as they both save state as well as manage its updates
 
 More information can be read in the Flux documentation:
 
@@ -108,9 +125,9 @@ This typically is caused by installing while an older version of Google Chrome i
 To fix the issue, perform the following steps:
 
 1. Update your version of Google Chrome to its latest version
-	- For example, if your Google Chrome was installed via `apt`/`dpkg`, then run `apt-get install google-chrome-stable`
+    - For example, if your Google Chrome was installed via `apt`/`dpkg`, then run `apt-get install google-chrome-stable`
 2. Reinstall `plaidchat` to pick up the latest version of `libffmpegsumo.so`
-	- `npm uninstall -g plaidchat && npm install -g plaidchat`
+    - `npm uninstall -g plaidchat && npm install -g plaidchat`
 
 Contributing
 ============
