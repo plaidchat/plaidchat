@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.6.0 (2015/06/29 20:55 +00:00)
+- [#90](https://github.com/plaidchat/plaidchat/pull/90) Completed --minimize-to-tray support (@twolfson, @LuckyThirteen)
+
 ### v2.5.1 (2015/06/29 02:08 +00:00)
 - [#99](https://github.com/plaidchat/plaidchat/pull/99) Added support for GITHUB_TOKEN in `release.sh` (@twolfson)
 - [#98](https://github.com/plaidchat/plaidchat/pull/98) Relaxed nw.js dependency (@mathieumg)
