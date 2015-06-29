@@ -1,6 +1,7 @@
 ## plaidchat changelog
 
-### v2.5.0 (2015/06/29 01:49 +00:00)
+### v2.5.1 (2015/06/29 02:08 +00:00)
+- [#99](https://github.com/plaidchat/plaidchat/pull/99) Added support for GITHUB_TOKEN in `release.sh` (@twolfson)
 - [#98](https://github.com/plaidchat/plaidchat/pull/98) Relaxed nw.js dependency (@mathieumg)
 
 ### v2.4.0 (2015/06/26 01:39 +00:00)
