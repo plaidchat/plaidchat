@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.5.0 (2015/06/29 01:49 +00:00)
+- [#98](https://github.com/plaidchat/plaidchat/pull/98) Relaxed nw.js dependency (@mathieumg)
+
 ### v2.4.0 (2015/06/26 01:39 +00:00)
 - [#92](https://github.com/plaidchat/plaidchat/pull/92) Added notification badges to sidebar (@twolfson)
 
