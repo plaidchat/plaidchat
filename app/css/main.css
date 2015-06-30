@@ -69,6 +69,7 @@ a {
 
 .team-sidebar__row {
 	margin: 16px 0;
+	position: relative;
 }
 
 .team-sidebar__row--active::before {
@@ -81,8 +82,21 @@ a {
 	/* Same as icon */
 	height: 36px;
 
-	/* Use same border radius as icon for good measure*/
+	/* Use same border radius as icon for good measure */
 	border-radius: 0 0.2rem 0.2rem 0;
+}
+
+.team-sidebar__row--unread::before {
+	display: block;
+	position: absolute;
+	content: '\A0';
+	/* https://css-tricks.com/snippets/css/css-triangle/ */
+	width: 0;
+	height: 0;
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent;
+	border-left: 4px solid #A296A4;
+	top: 14px;
 }
 
 /* One-off to make badge-container same width as icon--small */
