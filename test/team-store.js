@@ -51,7 +51,7 @@
 			var teams = this.store.getTeams();
 			expect(teams).to.have.length(1);
 			expect(teams[0]).to.have.property('team_id', '_plaidchat-placeholder-0');
-			expect(teams[0]).to.have.property('team_url', 'https://login.slack.com/');
+			expect(teams[0]).to.have.property('team_url', 'https://slack.com/signin');
 		});
 	});
 

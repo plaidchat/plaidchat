@@ -9,7 +9,7 @@
 
 	// Define constants
 	var CHANGE_EVENT = 'change';
-	var SLACK_LOGIN_URL = 'https://login.slack.com/';
+	var SLACK_LOGIN_URL = 'https://slack.com/signin';
 
 	// Define our internal storage system
 	var _state;
