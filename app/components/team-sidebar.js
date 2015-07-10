@@ -39,11 +39,17 @@
 				className: props.teams.length >= 2 ? 'team-sidebar' : 'team-sidebar hidden'
 			}, props.teams.map(function createTeamRow (team) {
 				var teamIcon = props.teamIcons[team.team_id];
-				var notificationCount = props.notificationsByTeamId[team.team_id] || 0;
+				var notificationInfo = props.notificationsByTeamId[team.team_id];
+				var unreadHighlightsCount = notificationInfo ? notificationInfo.unreadHighlightsCount : 0;
+				if (unreadHighlightsCount > 9) {
+					unreadHighlightsCount = '9+';
+				}
 				return React.DOM.div({
 					className: team.team_id === props.activeTeamId ?
 							'team-sidebar__row team-sidebar__row--active' :
-							'team-sidebar__row',
+							(notificationInfo && notificationInfo.unreadCount) ?
+								'team-sidebar__row team-sidebar__row--unread' :
+								'team-sidebar__row',
 					key: props.teamIndicies[team.team_id]
 				}, [
 					React.DOM.div({
@@ -58,8 +64,8 @@
 						}, [
 							React.DOM.div({
 								key: 'badge',
-								className: notificationCount ? 'badge' : 'badge hidden'
-							}, notificationCount.toString()),
+								className: unreadHighlightsCount ? 'badge' : 'badge hidden'
+							}, unreadHighlightsCount.toString()),
 							React.DOM.img({
 								className: 'icon--small',
 								key: 'img',

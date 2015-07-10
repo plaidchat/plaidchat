@@ -44,6 +44,30 @@
 			// Set src ouside of React to prevent reloading due to `src` change
 			var team = this.props.team || {};
 			iframeEl.src = team.team_url;
+
+			// Blur the window to prevent accidentally recognizing notifications
+			// DEV: To reproduce, you will need a test Slack team (e.g. `plaidchat-test`) and 2 test users
+			//   1. Log into both Slack teams in `plaidchat`
+			//   2. Go to an easy to remember channel (e.g. `#general`) in the second team
+			//   3. Select the first team as the active team
+			//   4. Close plaidchat
+			//   5. Via another interface (e.g. web), send a message to the channel of the second team (e.g. `#general`)
+			//   6. Open plaidchat
+			//   7. There should be a notification that appears and then disappears upon loading
+			// Another way to test is with the same setup except:
+			//   8. Don't click anything once plaidchat has opened
+			//   9. Send another message via another interface (e.g. web)
+			//   10. Click on menu bar of plaichat and see notification disappear
+			if (!this.props.active) {
+				iframeEl.blur();
+			}
+		},
+		componentDidUpdate: function () {
+			// Prevent accidental notifications still
+			if (!this.props.active) {
+				var iframeEl = React.findDOMNode(this.refs.iframe);
+				iframeEl.blur();
+			}
 		},
 		componentWillUnmount: function () {
 			// If we are about to unmount, remove our load listener
@@ -92,12 +116,11 @@
 		_onNotificationUpdate: function () {
 			// When our notification count changes, emit an event for the team with our unread count
 			// http://viewsource.in/https://slack.global.ssl.fastly.net/31971/js/rollup-client_1420067921.js#L6497
-			// TODO: Slack makes a distinction between highlights (e.g. @mentions) and normal messages (e.g. chat)
-			//   we should consider doing that too. The variable for this is `TS.model.all_unread_highlights_cnt`.
 			AppDispatcher.dispatch({
 				type: AppDispatcher.ActionTypes.NOTIFICATION_UPDATE,
 				teamId: this.getThisTeam().id,
-				notificationCount: this.getTS().model.all_unread_cnt
+				unreadCount: this.getTS().model.all_unread_cnt,  // DEV: This will include `highlights` in its count
+				unreadHighlightsCount: this.getTS().model.all_unread_highlights_cnt
 			});
 		},
 

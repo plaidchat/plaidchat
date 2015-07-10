@@ -51,14 +51,16 @@
 		getNotificationsByTeamId: function () {
 			return _.clone(_state.notificationsByTeamId);
 		},
-		getNotificationTotal: function () {
-			var notificationCounts = _.values(_state.notificationsByTeamId);
-			return notificationCounts.reduce(function sumNotificationCounts (sum, notificationCount) {
-				return sum + (notificationCount || 0);
-			}, 0);
+		getNotificationSummary: function () {
+			var notificationInfos = _.values(_state.notificationsByTeamId);
+			return notificationInfos.reduce(function sumNotificationCounts (sum, notificationInfo) {
+				sum.unreadCount += notificationInfo.unreadCount || 0;
+				sum.unreadHighlightsCount += notificationInfo.unreadHighlightsCount || 0;
+				return sum;
+			}, {unreadCount: 0, unreadHighlightsCount: 0});
 		},
-		setTeamNotifications: function (teamId, notificationCount) {
-			_state.notificationsByTeamId[teamId] = notificationCount;
+		setTeamNotifications: function (teamId, notificationInfo) {
+			_state.notificationsByTeamId[teamId] = notificationInfo;
 		},
 		unsetTeamNotifications: function (teamId) {
 			delete _state.notificationsByTeamId[teamId];
@@ -71,9 +73,13 @@
 		if (action.type === ActionTypes.NOTIFICATION_UPDATE) {
 			console.debug('Updating team notifications', {
 				teamId: action.teamId,
-				notificationCount: action.notificationCount
+				unreadCount: action.unreadCount,
+				unreadHighlightsCount: action.unreadHighlightsCount
 			});
-			NotificationStore.setTeamNotifications(action.teamId, action.notificationCount);
+			NotificationStore.setTeamNotifications(action.teamId, {
+				unreadCount: action.unreadCount,
+				unreadHighlightsCount: action.unreadHighlightsCount
+			});
 			NotificationStore.emitChange();
 		// When a team update occurs
 		} else if (action.type === ActionTypes.TEAMS_UPDATE) {
