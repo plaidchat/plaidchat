@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.7.0 (2015/07/10 21:00 +00:00)
+- [#94](https://github.com/plaidchat/plaidchat/pull/94) Added unread triangle and fixed notification count (@twolfson)
+
 ### v2.6.1 (2015/07/07 04:56 +00:00)
 - [#105](https://github.com/plaidchat/plaidchat/pull/105) Moved to new Slack login URL (@twolfson)
 
