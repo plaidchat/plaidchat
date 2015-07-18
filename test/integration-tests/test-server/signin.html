@@ -6,9 +6,10 @@
 <body>
   <h1>Mock sign in page</h1>
   <p>Everything is controlled via JS. Otherwise, we be testing our own test code which is silly (e.g. filling out our own forms).</p>
-  <a id="js-link" href="#">JavaScript controlled sign in link</a>
+  <a id="js-link" href="#"><span>JavaScript controlled sign in link<span></a>
   <script>
     var linkEl = document.getElementById('js-link');
+    var linkSpanEl = linkEl.querySelector('span');
     window.signInToTeam = function (teamName, options) {
       window.signInToTeams([teamName], options);
     };
@@ -20,7 +21,8 @@
       if (options.useLink) {
         // DEV: We use a link/click to emulate potentially clicking a "Switch" link in Slack
         linkEl.href = file;
-        linkEl.click();
+        // DEV: We click the span to catch a regression
+        linkSpanEl.click();
       } else {
         window.location = window.location + '/../' + file;
       }

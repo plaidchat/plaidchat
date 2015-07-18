@@ -37,8 +37,7 @@ describe('A plaidchat client signed in to 2 teams', function () {
 				});
 			});
 
-			// TODO: Repair this behavior as it causes leaks
-			describe.skip('with respect to the hidden windows', function () {
+			describe('with respect to the hidden windows', function () {
 				browserUtils.execute(function getHiddenWindowLocations () {
 					return window.getHiddenWindowLocations();
 				});
@@ -87,8 +86,7 @@ describe('A plaidchat client signed in to 2 teams', function () {
 				});
 			});
 
-			// TODO: Repair this behavior as it causes leaks
-			describe.skip('with respect to the hidden windows', function () {
+			describe('with respect to the hidden windows', function () {
 				browserUtils.execute(function getHiddenWindowLocations () {
 					return window.getHiddenWindowLocations();
 				});

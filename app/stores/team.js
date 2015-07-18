@@ -126,8 +126,17 @@
 		},
 		reset: _reset,
 		setActiveTeamId: function (id) {
-			// Update the active team id
-			_state.activeTeamId = id;
+			// If the team id has changed
+			var oldTeamId = _state.activeTeamId;
+			if (oldTeamId !== id) {
+				// Update the active team id
+				_state.activeTeamId = id;
+
+				// If the last team was a placeholder, remove it
+				if (oldTeamId && this.getTeamById(oldTeamId).is_placeholder) {
+					this.removeTeamById(oldTeamId);
+				}
+			}
 		},
 		setTeamIcon: function (id, teamIcon) {
 			_state.teamIconsById[id] = _.clone(teamIcon);
