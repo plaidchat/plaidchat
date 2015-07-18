@@ -2,6 +2,7 @@
 	'use strict';
 	// Load in our dependencies
 	var EventEmitter = require('events').EventEmitter;
+	var path = require('path');
 	var _ = require('underscore');
 	var assign = require('object-assign');
 	var AppDispatcher = require('../dispatchers/app');
@@ -9,8 +10,9 @@
 
 	// Define constants
 	var CHANGE_EVENT = 'change';
+	// DEV: We use `path.join` to eliminate `../../` for `===` comparisons later on
 	var SLACK_LOGIN_URL = process.env.NODE_ENV !== 'test' ? 'https://slack.com/signin' :
-		'file://' + __dirname + '/../../test/integration-tests/test-server/signin.html';
+		'file://' + path.join(__dirname, '../../test/integration-tests/test-server/signin.html');
 
 	// Define our internal storage system
 	var _state;
@@ -56,6 +58,7 @@
 		// Define handlers for managing teams
 		addPlaceholderTeam: function (url) {
 			var placeholderTeam = {
+				is_placeholder: true,
 				team_id: '_plaidchat-placeholder-' + _state._placeholderCounter,
 				team_name: 'Placeholder team ' + _state._placeholderCounter,
 				team_url: url || SLACK_LOGIN_URL
@@ -80,9 +83,14 @@
 			if (_state.activeTeamId === null) {
 				this.setActiveTeamId(team.team_id);
 			}
+
+			// Return our team
+			return team;
 		},
 		aliasTeamIndex: function (srcKey, targetKey) {
-			_state.teamIndicies[targetKey] = _state.teamIndicies[srcKey];
+			if (_state.teamIndicies[targetKey] === undefined) {
+				_state.teamIndicies[targetKey] = _state.teamIndicies[srcKey];
+			}
 		},
 		getActiveTeamId: function () {
 			return _state.activeTeamId;
@@ -194,6 +202,11 @@
 			console.debug('Setting active team id', {teamId: action.teamId});
 			TeamStore.setActiveTeamId(action.teamId);
 			TeamStore.emitChange();
+		} else if (action.type === ActionTypes.ADD_TEAM_REQUESTED) {
+			console.debug('Adding placeholder team');
+			var placeholderTeam = TeamStore.addPlaceholderTeam();
+			TeamStore.setActiveTeamId(placeholderTeam.team_id);
+			TeamStore.emitChange();
 		} else if (action.type === ActionTypes.APPLICATION_INIT) {
 			console.debug('Initializing application', {initialUrl: action.url});
 			TeamStore.init(action.url);
@@ -203,6 +216,9 @@
 			handleTeamUpdate(action);
 		}
 	});
+
+	// Expose the login URL as a class property
+	TeamStore.SLACK_LOGIN_URL = SLACK_LOGIN_URL;
 
 	// Export our TeamStore
 	module.exports = TeamStore;

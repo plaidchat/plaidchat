@@ -9,6 +9,13 @@
 		// Name to refer to elements by inside of React
 		displayName: 'team-sidebar',
 
+		// Helper for finding non-placeholder teams
+		getNonPlaceholderTeams: function () {
+			return this.props.teams.filter(function filterPlaceholderTeam (team) {
+				return team.is_placeholder !== true;
+			});
+		},
+
 		// Inform react to expect this data schema
 		propTypes: {
 			activeTeamId: React.PropTypes.string,
@@ -33,11 +40,12 @@
 
 		// Render our sidebar with active icons
 		render: function () {
+			var nonPlaceholderTeams = this.getNonPlaceholderTeams();
 			var props = this.props;
 			var _onClick = this._onClick;
 			return React.DOM.div({
-				className: props.teams.length >= 2 ? 'team-sidebar' : 'team-sidebar hidden'
-			}, props.teams.map(function createTeamRow (team) {
+				className: nonPlaceholderTeams.length >= 2 ? 'team-sidebar' : 'team-sidebar hidden'
+			}, nonPlaceholderTeams.map(function createTeamRow (team) {
 				var teamIcon = props.teamIcons[team.team_id];
 				var notificationInfo = props.notificationsByTeamId[team.team_id];
 				var unreadHighlightsCount = notificationInfo ? notificationInfo.unreadHighlightsCount : 0;
