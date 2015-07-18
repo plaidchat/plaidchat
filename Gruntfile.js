@@ -8,7 +8,7 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		jshint: {
-			all: ['*.js', 'app/js/*.js'],
+			all: ['*.js', 'app/js/*.js', 'test/**/*.js'],
 			jshintrc: '.jshintrc'
 		},
 		jscs: {
@@ -19,7 +19,7 @@ module.exports = function (grunt) {
 		},
 		lintspaces: {
 			src: [
-				'*', 'app/**/*',
+				'*', 'app/**/*', 'test/**/*',
 				'!**/*.png', // Exclude images to prevent odd errors
 				'!README.md' // Exclude README due to CLI indentation
 			],

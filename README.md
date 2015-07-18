@@ -103,6 +103,22 @@ More information can be read in the Flux documentation:
 
 <http://facebook.github.io/flux/>
 
+Testing
+=======
+Tests can be run via the following commands:
+
+```bash
+# Start up a Selenium server for integration tests
+npm run start-webdriver
+
+# In another tab, run all our tests (unit, integration, linting)
+npm test
+```
+
+The integration tests require a bit of explanation. Please see [their documentation for more info][integration-tests-docs].
+
+[integration-tests-docs]: test/integration-tests/README.md
+
 Issues
 ======
 libudev.so

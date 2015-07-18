@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>plaidchat test - Mock sign in page</title>
+</head>
+<body>
+  <h1>Mock sign in page</h1>
+  <p>Everything is controlled via JS. Otherwise, we be testing our own test code which is silly (e.g. filling out our own forms).</p>
+  <script>
+    window.signInToTeam = function (teamName) {
+      window.location = window.location + '/../team.html?' + encodeURIComponent(teamName);
+    };
+  </script>
+</body>
+</html>

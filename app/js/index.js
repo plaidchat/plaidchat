@@ -14,6 +14,11 @@
 	var win = gui.Window.get();
 	var SLACK_DOWNLOAD_HOSTNAME = 'files.slack.com';
 
+	// If we are in a test environment, clear out localStorage
+	if (process.env.NODE_ENV === 'test') {
+		localStorage.clear();
+	}
+
 	// Interpet our CLI arguments
 	// DEV: We need to coerce `nw.js'` arguments as `commander` expects normal (`['node', 'plaidchat', '--help']`)
 	//   but `nw.js` only provides arguments themselves (e.g. `--help`)
@@ -21,6 +26,8 @@
 	program
 		.version(pkg.version)
 		.option('--minimize-to-tray', 'When the tray icon is clicked, hide the window rather than minimize')
+		// Allow unknown Chromium flags (used by integration tests)
+		.allowUnknownOption()
 		.parse(argv);
 
 	win.on('new-win-policy', function (frame, urlStr, policy) {

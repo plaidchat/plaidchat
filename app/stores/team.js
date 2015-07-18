@@ -9,7 +9,8 @@
 
 	// Define constants
 	var CHANGE_EVENT = 'change';
-	var SLACK_LOGIN_URL = 'https://slack.com/signin';
+	var SLACK_LOGIN_URL = process.env.NODE_ENV !== 'test' ? 'https://slack.com/signin' :
+		'file://' + __dirname + '/../../test/integration-tests/test-server/signin.html';
 
 	// Define our internal storage system
 	var _state;

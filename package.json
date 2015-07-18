@@ -39,22 +39,30 @@
   ],
   "scripts": {
     "build": "mkdir -p dist/js/ 2> /dev/null; browserify app/js/react.js -o dist/js/react.js",
+    "integration-test": "npm run verify-webdriver-running && mocha --timeout 10000 test/integration-tests/",
+    "lint": "grunt lint",
     "start": "node ./run.js",
-    "test": "mocha && grunt lint",
-    "postinstall": "./postinstall.sh"
+    "start-webdriver": "bin/start-webdriver.sh",
+    "test": "npm run unit-test && npm run integration-test && npm run lint",
+    "unit-test": "mocha test/unit-tests/",
+    "postinstall": "./postinstall.sh",
+    "verify-webdriver-running": "curl --silent http://localhost:4444/ > /dev/null || (echo \"Selenium server was not found. Please start it via \\`npm run start-webdriver\\`\" 1>&2 && exit 1)"
   },
   "bin": {
     "plaidchat": "./run.js"
   },
   "devDependencies": {
     "chai": "^3.0.0",
+    "function-to-string": "^0.2.0",
     "github-changes": "^1.0.0",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-jscs": "^1.1.0",
     "grunt-lintspaces": "^0.6.0",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "wd": "^0.3.12",
+    "webdriver-manager": "^6.0.0"
   },
   "single-instance": true,
   "window": {
