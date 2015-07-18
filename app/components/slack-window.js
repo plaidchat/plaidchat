@@ -39,11 +39,19 @@
 		// Upon clicking an element
 		addClickListeners: function () {
 			var win = this.getWindow();
+			var bodyEl = win.document.body;
 			var that = this;
 			win.addEventListener('click', function handleClick (evt) {
 				// If the target isn't a link, skip it
+				// DEV: This is a lo-fi event delegation. If we ever use it elsewhere, please use something more formal
 				var targetEl = evt.target;
-				if (targetEl.tagName.toLowerCase() !== 'a') {
+				while (targetEl !== bodyEl) {
+					if (targetEl.tagName.toLowerCase() === 'a') {
+						break;
+					}
+					targetEl = targetEl.parentNode;
+				}
+				if (targetEl === bodyEl) {
 					return;
 				}
 
@@ -141,6 +149,9 @@
 			// If we are about to unmount, remove our load listener
 			var iframeEl = React.findDOMNode(this.refs.iframe);
 			iframeEl.removeEventListener(this._onload);
+
+			// Stop our team loader timeout
+			this._clearTeamsLoaded();
 		},
 
 		// Element name to use inside of React
@@ -217,10 +228,13 @@
 		},
 
 		// Methods for interacting with teams
+		_clearTeamsLoaded: function () {
+			return clearTimeout(this.teamsLoadedTimeout);
+		},
 		resetTeamsLoaded: function () {
 			// Stop the current loop for teams loaded
 			console.debug('An iframe reloaded, clearing out its existing `watchTeamsLoaded` timeout');
-			clearTimeout(this.teamsLoadedTimeout);
+			return this._clearTeamsLoaded();
 		},
 		teamsLoaded: function () {
 			var win = this.getWindow();
@@ -233,7 +247,8 @@
 				if (count % 10 === 0) {
 					console.debug('Teams not loaded yet for "' + this.getUrl() + '".');
 				}
-				return setTimeout(this.watchTeamsLoaded.bind(this, count), 100);
+				this.teamsLoadedTimeout = setTimeout(this.watchTeamsLoaded.bind(this, count), 100);
+				return;
 			}
 
 			// Otherwise, update the teams
