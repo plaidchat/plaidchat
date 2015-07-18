@@ -2,8 +2,8 @@
 	'use strict';
 	// Load in our dependencies
 	var expect = require('chai').expect;
-	var AppDispatcher = require('../app/dispatchers/app');
-	var _TeamStore = require('../app/stores/team');
+	var AppDispatcher = require('../../app/dispatchers/app');
+	var _TeamStore = require('../../app/stores/team');
 
 	// Fallback console.debug to a noop
 	console.debug = function () {};

@@ -3,3 +3,25 @@ language: node_js
 node_js:
   - "0.11"
   - "0.10"
+
+install:
+  # Install our node dependencies
+  - npm install
+
+  # Install webdriver dependencies
+  # DEV: We run this here to avoid race conditions (e.g. Selenium not started) in testing
+  - bin/install-webdriver-dependencies.sh
+
+script:
+  # Set our display to :99 and start a mock X11 server
+  - export DISPLAY=":99"
+  - Xvfb "$DISPLAY" &> /dev/null &
+
+  # Start a Selenium server for our integration tests
+  - npm run start-webdriver &> /dev/null &
+
+  # Wait for Selenium to start
+  - bin/wait-for-selenium.sh
+
+  # Run all our tests
+  - npm test
