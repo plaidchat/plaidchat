@@ -11,6 +11,7 @@
 	// DEV: keyMirror copies keys to values (e.g. `{TEAMS_UPDATE: 'TEAMS_UPDATE'}`)
 	dispatcher.ActionTypes = keyMirror({
 		ACTIVATE_TEAM: true,
+		ADD_TEAM_REQUESTED: true,
 		APPLICATION_INIT: true,
 		NOTIFICATION_UPDATE: true,
 		TEAMS_UPDATE: true

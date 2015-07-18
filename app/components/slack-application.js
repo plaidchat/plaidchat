@@ -82,7 +82,8 @@
 					return React.createElement(SlackWindow, {
 						active: team.team_id === activeTeamId,
 						key: teamIndicies[team.team_id],
-						team: team
+						team: team,
+						teams: teams
 					});
 				}))
 			]);

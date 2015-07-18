@@ -2,6 +2,7 @@
 	'use strict';
 	// Load in our dependencies
 	var React = window.React;
+	var TeamStore = require('../stores/team');
 	var AppDispatcher = require('../dispatchers/app');
 
 	// Define our SlackWindow
@@ -33,6 +34,73 @@
 				}
 				win._plaidchatBoundListeners = true;
 			}
+		},
+
+		// Upon clicking an element
+		addClickListeners: function () {
+			var win = this.getWindow();
+			var that = this;
+			win.addEventListener('click', function handleClick (evt) {
+				// If the target isn't a link, skip it
+				var targetEl = evt.target;
+				if (targetEl.tagName.toLowerCase() !== 'a') {
+					return;
+				}
+
+				// If we are a team page and navigating to the "Sign In" page
+				// DEV: Localize `href` to prevent requeries on the DOM
+				var targetHref = targetEl.href;
+				if (that.teamsLoaded() && targetHref === TeamStore.SLACK_LOGIN_URL) {
+					// Stop the default action
+					console.debug('Preventing default sign in action. Overriding with new plaidchat window');
+					evt.preventDefault();
+					evt.stopPropagation();
+
+					// Open a new placeholder sign in page
+					AppDispatcher.dispatch({
+						type: AppDispatcher.ActionTypes.ADD_TEAM_REQUESTED
+					});
+					return;
+				}
+
+				// If we are navigating to a known team page
+				//   (e.g. clicking a "Switch to team" link on either team page or sign in)
+				var i = 0;
+				var knownTeams = that.props.teams;
+				var len = knownTeams.length;
+				for (; i < len; i++) {
+					var knownTeam = knownTeams[i];
+
+					// If this is the current team, skip it. This is not a switcher so don't block it
+					// DEV: If we ever have an action which switches teams AND it's URL, then start tracking all window locations
+					//   and always update the `contentWindow` location `onComponentUpdate` (if the location changed)
+					//   Also, we will need to block some `shouldComponentUpdate` with a deepEqual on props
+					//   since we might not have loaded our changes into the stores yet
+					if (knownTeam.team_id === that.props.team.team_id) {
+						continue;
+					}
+
+					// DEV: This integration will break if a team URL ever becomes a substring of another
+					//   Thankfully, `https://plaidchat-test.slack.com/` can never be a substring in the hostname
+					// DEV: Slack navigates to `https://plaidchat-test.slack.com/messages`
+					if (targetHref.indexOf(knownTeam.team_url) === 0) {
+						// Stop the default action
+						console.debug('Preventing default switch team action. Overriding with plaidchat team switch', {
+							href: targetHref,
+							team_url: knownTeam.team_url
+						});
+						evt.preventDefault();
+						evt.stopPropagation();
+
+						// Open a new placeholder sign in page
+						AppDispatcher.dispatch({
+							type: AppDispatcher.ActionTypes.ACTIVATE_TEAM,
+							teamId: knownTeam.team_id
+						});
+						return;
+					}
+				}
+			});
 		},
 
 		// When React adds/removes our `iframe` to the DOM
@@ -81,7 +149,8 @@
 		// Methods for accessing team information
 		getAllTeams: function () {
 			// [{id: user_id, name: user_name, team_id, team_name, team_url,
-			//   team_icon: {image_34: http://url/34.png, image_{44,68,88,102,132}, image_default: true}}]			var win = this.getWindow();
+			//   team_icon: {image_34: http://url/34.png, image_{44,68,88,102,132}, image_default: true}}]
+			// DEV: The first team doesn't have `team_icon` set
 			var win = this.getWindow();
 			return win.TS.getAllTeams();
 		},
@@ -110,6 +179,7 @@
 		_onload: function () {
 			// When our page loads, hook up listeners
 			this.addNotificationListeners();
+			this.addClickListeners();
 			this.resetTeamsLoaded();
 			this.watchTeamsLoaded();
 		},
@@ -156,11 +226,14 @@
 			var win = this.getWindow();
 			return win &&  win.TS && win.TS.getAllTeams && win.TS.getAllTeams();
 		},
-		watchTeamsLoaded: function () {
+		watchTeamsLoaded: function (count) {
 			// If we haven't completed loading yet, wait for 100ms
 			if (!this.teamsLoaded()) {
-				console.debug('Teams not loaded yet for "' + this.getUrl() + '". Waiting 100ms');
-				return setTimeout(this.watchTeamsLoaded, 100);
+				count = (count || 0) + 1;
+				if (count % 10 === 0) {
+					console.debug('Teams not loaded yet for "' + this.getUrl() + '".');
+				}
+				return setTimeout(this.watchTeamsLoaded.bind(this, count), 100);
 			}
 
 			// Otherwise, update the teams

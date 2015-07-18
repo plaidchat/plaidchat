@@ -4,7 +4,84 @@
   <title>plaidchat test - Mock team page</title>
 </head>
 <body>
-  <h1>Mock team page</h1>
+  <script>
+    // Grab our team name from the URL (e.g. `team.html?plaidchat1,plaidchat2` -> `[plaidchat1, plaidchat2]`)
+    var queryString = decodeURIComponent(window.location.search.slice(1));
+    window._teamNames = queryString.split(/,/g);
+    window._teamName = window._teamNames[0];
+
+    // Generate full teams
+    window._teams = window._teamNames.map(function generateTeams (teamName, i) {
+      // Find the team order for this team (e.g. `pc1,pc2,pc3` -> `pc2,pc1,pc3` for `pc2`)
+      var thisTeams = window._teamNames.slice();
+      thisTeams.splice(i, 1);
+      thisTeams.unshift(teamName);
+      var teamUrl = window.location.origin + window.location.pathname +
+        '?' + encodeURIComponent(thisTeams.join(','));
+
+      // Create our team
+      var team = {
+        team_id: teamName, // e.g. plaidchat1
+        team_name: teamName, // e.g. plaidchat1
+        team_url: teamUrl,
+        team_icon: {
+          image_44: 'http://lorempixel.com/44/44/abstract/1/?' + encodeURIComponent(teamName)
+        }
+      };
+
+      // If this is the first team, then scrub it's images
+      // DEV: In Slack, we don't provide an image for the first team
+      if (i === 0) {
+        delete team.team_icon;
+      };
+
+      // Return our team
+      return team;
+    });
+  </script>
+  <!-- `document.write` is a bad practice but this helps us debug easily -->
+  <h1>Mock team page (<script>document.write(window._teamName);</script>)</h1>
   <p>Everything is controlled via JS. Otherwise, we be testing our own test code which is silly (e.g. filling out our own forms).</p>
+  <script>
+    window._teams.forEach(function generateTeamLink (team, i) {
+      // Generate our elements
+      var divEl = document.createElement('div');
+      var linkEl = document.createElement('a');
+      divEl.appendChild(linkEl);
+      document.body.appendChild(divEl);
+
+      // If this is the first team, add a customization link
+      if (i === 0) {
+        linkEl.href = team.team_url + '#customize';
+        linkEl.textContent = 'Customize ' + team.team_name;
+        return;
+      }
+
+      // Otherwise, add a link to sign in on the page
+      // DEV: We must use a non-exact match to mimic what Slack does
+      //   They use `https://plaidchat-test.slack.com/messages`
+      linkEl.href = team.team_url + '#messages';
+      linkEl.textContent = 'Switch to ' + team.team_name;
+    });
+  </script>
+  <div>
+    <a id="signin-link" href="signin.html">Sign in to another team...</a>
+  </div>
+  <script>
+    window.TS = {
+      getAllTeams: function () {
+        return window._teams.slice();
+      },
+      model: {
+        team: {
+          id: window._teamName, // e.g. plaidchat1
+          name: window._teamName, // e.g. plaidchat1
+          icon: {
+            image_44: 'http://lorempixel.com/44/44/abstract/1/?' + encodeURIComponent(window._teamName)
+          }
+        }
+      }
+    };
+  </script>
 </body>
 </html>
