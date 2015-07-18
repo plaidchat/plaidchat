@@ -1,5 +1,10 @@
 ## plaidchat changelog
 
+### v2.8.0 (2015/07/18 22:49 +00:00)
+- [#110](https://github.com/plaidchat/plaidchat/pull/110) Finished remaining tests and caught "Switch Team" regression (@twolfson)
+- [#109](https://github.com/plaidchat/plaidchat/pull/109) Added tests and repaired team management (@twolfson)
+- [#108](https://github.com/plaidchat/plaidchat/pull/108) Added integration tests (@twolfson)
+
 ### v2.7.0 (2015/07/10 21:00 +00:00)
 - [#94](https://github.com/plaidchat/plaidchat/pull/94) Added unread triangle and fixed notification count (@twolfson)
 
