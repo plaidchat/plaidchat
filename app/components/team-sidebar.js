@@ -28,8 +28,17 @@
 			teamIndicies: React.PropTypes.objectOf(React.PropTypes.number)
 		},
 
-		// When a click event occurs, then emit an event that a team was activated
-		_onClick: function (evt) {
+    // When a "add team" click even occurs, then emit an event that a new team addition was requested
+    // TODO: Make sure that clicking a new placeholder over and over again doesn't generate many many windows
+    // TODO: Make sure that clicking a new placeholder over and over again doesn't generate many many windows
+    // TODO: Make sure that clicking a new placeholder over and over again doesn't generate many many windows
+    _onAddTeamClick: function (evt) {
+        AppDispatcher.dispatch({
+            type: AppDispatcher.ActionTypes.ADD_TEAM_REQUESTED
+        });
+    },
+    // When a "team" click event occurs, then emit an event that a team was activated
+    _onTeamClick: function (evt) {
 			var linkEl = evt.currentTarget;
 			var activatedTeamId = linkEl.getAttribute('data-team-id');
 			AppDispatcher.dispatch({
@@ -42,7 +51,7 @@
 		render: function () {
 			var nonPlaceholderTeams = this.getNonPlaceholderTeams();
 			var props = this.props;
-			var _onClick = this._onClick;
+			var _onTeamClick = this._onTeamClick;
 			return React.DOM.div({
 				className: nonPlaceholderTeams.length >= 2 ? 'team-sidebar' : 'team-sidebar hidden'
 			}, nonPlaceholderTeams.map(function createTeamRow (team) {
@@ -68,7 +77,7 @@
 							'data-team-id': team.team_id,
 							href: '#',
 							key: 'link',
-							onClick: _onClick
+							onClick: _onTeamClick
 						}, [
 							React.DOM.div({
 								key: 'badge',
@@ -82,7 +91,38 @@
 						])
 					])
 				]);
-			}));
+      }).concat([
+          // TODO: But we can't atm... due to the existing bug of "Sign in to another team" via a Slack iframe
+          // TODO: Sooo... let's ditch the new HTML/CSS but keep the "ADD_TEAM" dispatcher/store behavior
+          // TODO: And add hooks to the iframes to override top level link clicks
+          // TODO: and start testing there..
+          // TODO: Test signing into a second team shows the sidebar with both different logos
+          // TODO: Test clicking a team logo in the sidebar
+          //    Switches the active iframe
+          //    Changes selected team logo in sidebar
+                  // TODO: Test clicking a team logo to first team
+                  //    Switches the active iframe
+                  //    Changes selected team logo in sidebar
+          // TODO: Test that clicking "add team" in the sidebar (requires 2 teams existing)
+          //   Shows a login iframe
+          //   Deselects our app icons
+                  // Logging into the first existing team
+                          //    Switches the active iframe
+                          //    Changes selected team logo in sidebar
+                  // Logging into the second existing team (regression)
+                          //    Switches the active iframe
+                          //    Changes selected team logo in sidebar
+          // TODO: Test adding a placeholder team when there are 2 teams existing
+          //   and we add a third team
+              //    Switches the active iframe
+              //    Changes selected team logo in sidebar
+          React.DOM.a({
+              className: 'team-sidebar__add-team font--alternative link--hidden link--muted text--bold',
+              href: '#',
+              key: 'add-team-link',
+              onClick: this._onAddTeamClick
+          }, '+')
+      ]));
 		}
 	});
 }());

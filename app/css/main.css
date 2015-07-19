@@ -1,4 +1,12 @@
 /* Base styles */
+/* http://viewsource.in/https://slack.global.ssl.fastly.net/e2cd/style/rollup-client_general.css#L33 */
+* {
+	-ms-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
 html, body {
 	width: 100%;
 	height: 100%;
@@ -9,8 +17,19 @@ html, body {
 }
 
 body {
-	/* http://viewsource.in/https://slack.global.ssl.fastly.net/8607/style/rollup-client_secondary.css#L251 */
-	font-family: 'Emoji Passthrough', Lato, appleLogo, sans-serif;
+	/* http://viewsource.in/https://slack.global.ssl.fastly.net/4b7a/style/rollup-client_core.css#L973 */
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1rem;
+  background: #fff;
+  color: #555459;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 a {
@@ -49,6 +68,23 @@ a {
 	width: 36px;
 }
 
+.link--muted {
+	/* http://viewsource.in/https://slack.global.ssl.fastly.net/4b7a/style/rollup-client_core.css#L1225 */
+	color: #847987;
+	-webkit-transition: all .25s cubic-bezier(.16, .85, .5, 1) .25s;
+	-moz-transition: all .25s cubic-bezier(.16, .85, .5, 1) .25s;
+	transition: all .25s cubic-bezier(.16, .85, .5, 1) .25s;
+}
+
+.link--muted:hover {
+	color: white;
+}
+
+.link--hidden {
+	text-decoration: none;
+}
+
+
 /* Application specific components/classes */
 /* Application container */
 .slack-application {
@@ -65,6 +101,7 @@ a {
 	min-width: 76px;
 	order: -1;
 	text-align: center;
+	position: relative;
 }
 
 .team-sidebar__row {
@@ -105,6 +142,21 @@ a {
 	margin: 0 auto;
 }
 
+/* One-off for our add icon */
+.team-sidebar__add-team {
+	/* http://viewsource.in/https://slack.global.ssl.fastly.net/4b7a/style/rollup-client_core.css#L1220 */
+  position: absolute;
+  display: block;
+  bottom: 0;
+  width: 100%;
+  height: 4rem;
+
+  font-size: 1.8rem; /* Increased font size to match mock */
+  line-height: 1.4rem;
+
+  padding: 1.4rem 1rem 0;
+}
+
 /* Window switcher */
 .slack-window-container {
 	height: 100%;
@@ -119,4 +171,12 @@ a {
 /* Trumps */
 .hidden {
 	display: none;
+}
+
+.font--alternative {
+	font-family: Lato, appleLogo, sans-serif;
+}
+
+.text--bold {
+  font-weight: bold;
 }
