@@ -33,9 +33,9 @@
 		// TODO: Make sure that clicking a new placeholder over and over again doesn't generate many many windows
 		// TODO: Make sure that clicking a new placeholder over and over again doesn't generate many many windows
 		_onAddTeamClick: function (evt) {
-				AppDispatcher.dispatch({
-						type: AppDispatcher.ActionTypes.ADD_TEAM_REQUESTED
-				});
+			AppDispatcher.dispatch({
+				type: AppDispatcher.ActionTypes.ADD_TEAM_REQUESTED
+			});
 		},
 		// When a "team" click event occurs, then emit an event that a team was activated
 		_onTeamClick: function (evt) {
@@ -92,11 +92,6 @@
 					])
 				]);
 			}).concat([
-					// TODO: But we can't atm... due to the existing bug of "Sign in to another team" via a Slack iframe
-					// TODO: Sooo... let's ditch the new HTML/CSS but keep the "ADD_TEAM" dispatcher/store behavior
-					// TODO: And add hooks to the iframes to override top level link clicks
-					// TODO: and start testing there..
-					// TODO: Test signing into a second team shows the sidebar with both different logos
 					// TODO: Test clicking a team logo in the sidebar
 					//    Switches the active iframe
 					//    Changes selected team logo in sidebar
@@ -112,15 +107,11 @@
 									// Logging into the second existing team (regression)
 													//    Switches the active iframe
 													//    Changes selected team logo in sidebar
-					// TODO: Test adding a placeholder team when there are 2 teams existing
-					//   and we add a third team
-							//    Switches the active iframe
-							//    Changes selected team logo in sidebar
 					React.DOM.a({
-							className: 'team-sidebar__add-team font--alternative link--hidden link--muted text--bold',
-							href: '#',
-							key: 'add-team-link',
-							onClick: this._onAddTeamClick
+						className: 'team-sidebar__add-team font--alternative link--hidden link--muted text--bold',
+						href: '#',
+						key: 'add-team-link',
+						onClick: this._onAddTeamClick
 					}, '+')
 			]));
 		}
