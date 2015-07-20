@@ -1,5 +1,9 @@
 ## plaidchat changelog
 
+### v2.9.0 (2015/07/20 02:12 +00:00)
+- [#113](https://github.com/plaidchat/plaidchat/pull/113) Updated CLI help (@twolfson)
+- [#112](https://github.com/plaidchat/plaidchat/pull/112) Add the --close-to-tray command line option. (@LuckyThirteen)
+
 ### v2.8.0 (2015/07/18 22:49 +00:00)
 - [#110](https://github.com/plaidchat/plaidchat/pull/110) Finished remaining tests and caught "Switch Team" regression (@twolfson)
 - [#109](https://github.com/plaidchat/plaidchat/pull/109) Added tests and repaired team management (@twolfson)
