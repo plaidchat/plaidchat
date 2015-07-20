@@ -51,6 +51,7 @@ $ plaidchat --help
     -h, --help          output usage information
     -V, --version       output the version number
     --minimize-to-tray  When the tray icon is clicked, hide the window rather than minimize
+    --close-to-tray     When the close button is clicked, minimize the app to tray instead of killing it.
 
 ```
 
