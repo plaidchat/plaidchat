@@ -26,6 +26,7 @@
 	program
 		.version(pkg.version)
 		.option('--minimize-to-tray', 'When the tray icon is clicked, hide the window rather than minimize')
+		.option('--close-to-tray', 'When the close button is clicked, minimize the app to tray instead of killing it.')
 		// Allow unknown Chromium flags (used by integration tests)
 		.allowUnknownOption()
 		.parse(argv);
@@ -55,6 +56,7 @@
 	// DEV: isHidden only changes programmatically; there are no events for it
 	var isHidden = false;
 	var isMinimized = false;
+	var hiddenWanted = program.minimizeToTray || program.closeToTray;
 	win.on('minimize', function saveMinimization () {
 		isMinimized = true;
 	});
@@ -126,20 +128,24 @@
 			}
 		},
 		showWindow: function () {
-			if (program.minimizeToTray) {
+			if (hiddenWanted) {
 				plaidchat._showHidden();
 			} else {
 				plaidchat._showMinimize();
 			}
 		},
 		toggleVisibility: function () {
-			if (program.minimizeToTray) {
+			if (hiddenWanted) {
 				plaidchat._toggleHidden();
 			} else {
 				plaidchat._toggleMinimize();
 			}
 		}
 	};
+
+	if (program.closeToTray) {
+		win.on('close', plaidchat._toggleHidden);
+	}
 
 	// When `plaidchat` is run and we have an existing window, show the window
 	// DEV: This only works when we have `single-instance: true` set
