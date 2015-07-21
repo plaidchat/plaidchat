@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.9.1 (2015/07/21 16:06 +00:00)
+- [#114](https://github.com/plaidchat/plaidchat/pull/114) Moved to simplified Selenium configuration (@twolfson)
+
 ### v2.9.0 (2015/07/20 02:12 +00:00)
 - [#113](https://github.com/plaidchat/plaidchat/pull/113) Updated CLI help (@twolfson)
 - [#112](https://github.com/plaidchat/plaidchat/pull/112) Add the --close-to-tray command line option. (@LuckyThirteen)
