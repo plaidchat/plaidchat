@@ -1,8 +1,12 @@
 // Load in dependencies
 var assert = require('assert');
 var functionToString = require('function-to-string');
+var nw = require('nw');
 var wd = require('wd');
 var definePlaidchatHelpers = require('./plaidchat-helpers');
+
+// Eagerly find our nw patch
+var nwCmd = nw.findpath();
 
 // Define helpers for interacting with the browser
 exports.openPlaidchat = function (options) {
@@ -22,7 +26,12 @@ exports.openPlaidchat = function (options) {
 		//    when mocha is completed, access `browser` as a Selenium session
 	});
 	before(function openBrowser (done) {
-		this.browser.init({browserName: 'chrome'}, done);
+		this.browser.init({
+			browserName: 'chrome',
+			chromeOptions: {
+				binary: nwCmd
+			}
+		}, done);
 	});
 	before(function navigateToPlaidchat (done) {
 		// /plaidchat/test/integration-tests/utils/../../../app/views/index.html

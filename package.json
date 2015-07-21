@@ -62,7 +62,7 @@
     "grunt-lintspaces": "^0.6.0",
     "mocha": "^2.2.5",
     "wd": "^0.3.12",
-    "webdriver-manager": "^6.0.0"
+    "webdriver-manager": "^7.0.1"
   },
   "single-instance": true,
   "window": {
