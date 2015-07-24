@@ -80,9 +80,6 @@
 		load: function () {
 			// Bind our app menu to the window
 			AppMenu.bindTo(win);
-			// DEV: AppMenu causes scaling problems (nw.gui, maybe?) when launching
-			//   with flag --force-device-scale-factor, for 2x scaling with high DPI
-			//   screens. Possibly add a launch flag to make this feature optional.
 
 			// Setup initial team
 			SlackApplication.loadInitialTeams();
