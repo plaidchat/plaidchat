@@ -27,6 +27,7 @@
 		.version(pkg.version)
 		.option('--minimize-to-tray', 'When the tray icon is clicked, hide the window rather than minimize')
 		.option('--close-to-tray', 'When the close button is clicked, minimize the app to tray instead of killing it.')
+		.option('--force-device-scale-factor=[value]', 'Sets the UI scaling factor (default: 1, set to 2 for high-DPI)')
 		// Allow unknown Chromium flags (used by integration tests)
 		.allowUnknownOption()
 		.parse(argv);
@@ -79,6 +80,9 @@
 		load: function () {
 			// Bind our app menu to the window
 			AppMenu.bindTo(win);
+			// DEV: AppMenu causes scaling problems (nw.gui, maybe?) when launching
+			//   with flag --force-device-scale-factor, for 2x scaling with high DPI
+			//   screens. Possibly add a launch flag to make this feature optional.
 
 			// Setup initial team
 			SlackApplication.loadInitialTeams();
