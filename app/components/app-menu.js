@@ -2,7 +2,6 @@
 	'use strict';
 	// Load in our dependencies
 	var gui = require('nw.gui');
-	var pkg = require('../../package.json');
 
 	// Define an AppMenu factory on window
 	window.AppMenu = {
@@ -36,11 +35,35 @@
 				key: 'r', // ctrl+r to reload
 				modifiers: 'ctrl'
 			}));
+			var zoomSubsubmenu = new gui.Menu();
+			zoomSubsubmenu.append(new gui.MenuItem({
+				label: 'Zoom In - Ctrl++',
+				click: window.plaidchat.zoomIn,
+				// DEV: Neither `ctrl++` nor `ctrl+shift++` works on a US keyboard, choosing this solution for now
+				key: '=', // ctrl++ to open dev tools
+				modifiers: 'ctrl+shift'
+			}));
+			zoomSubsubmenu.append(new gui.MenuItem({
+				label: 'Zoom Out - Ctrl+-',
+				click: window.plaidchat.zoomOut,
+				key: '-', // ctrl+- to open dev tools
+				modifiers: 'ctrl'
+			}));
+			zoomSubsubmenu.append(new gui.MenuItem({
+				label: 'Zoom Reset - Ctrl+0',
+				click: window.plaidchat.zoomReset,
+				key: '0', // ctrl+0 to open dev tools
+				modifiers: 'ctrl'
+			}));
+			viewSubmenu.append(new gui.MenuItem({
+				label: 'Zoom',
+				submenu: zoomSubsubmenu
+			}));
 			var developerSubsubmenu = new gui.Menu();
 			developerSubsubmenu.append(new gui.MenuItem({
 				label: 'Toggle Developer Tools - Ctrl+Shift+I',
 				click: window.plaidchat.toggleDevTools,
-				key: 'i', // ctrl++shift+i to open dev tools
+				key: 'i', // ctrl+shift+i to open dev tools
 				modifiers: 'ctrl-shift'
 			}));
 			viewSubmenu.append(new gui.MenuItem({

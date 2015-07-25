@@ -140,6 +140,19 @@
 			} else {
 				plaidchat._toggleMinimize();
 			}
+		},
+		// Expose our window for easier debugging
+		window: win,
+
+		// Zoom methods
+		zoomIn: function () {
+			win.zoomLevel += 1;
+		},
+		zoomOut: function () {
+			win.zoomLevel -= 1;
+		},
+		zoomReset: function () {
+			win.zoomLevel = 0;
 		}
 	};
 
