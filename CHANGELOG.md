@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.10.0 (2015/07/29 03:02 +00:00)
+- [#122](https://github.com/plaidchat/plaidchat/pull/122) fix #100 (@Mte90)
+
 ### v2.9.1 (2015/07/21 16:06 +00:00)
 - [#114](https://github.com/plaidchat/plaidchat/pull/114) Moved to simplified Selenium configuration (@twolfson)
 
