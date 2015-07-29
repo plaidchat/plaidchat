@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.11.0 (2015/07/29 07:23 +00:00)
+- [#123](https://github.com/plaidchat/plaidchat/pull/123) Added libffmpegsumo.so detection for Google Chrome Beta/Unstable (@twolfson)
+
 ### v2.10.0 (2015/07/29 03:02 +00:00)
 - [#122](https://github.com/plaidchat/plaidchat/pull/122) fix #100 (@Mte90)
 
