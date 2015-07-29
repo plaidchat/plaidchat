@@ -6,6 +6,10 @@ set -x
 # If there is a libffmpegsumo, copy it over
 if test -f /opt/google/chrome/libffmpegsumo.so; then
 	cp /opt/google/chrome/libffmpegsumo.so node_modules/nw/nwjs/libffmpegsumo.so
+elif test -f /opt/google/chrome-beta/libffmpegsumo.so; then
+	cp /opt/google/chrome-beta/libffmpegsumo.so node_modules/nw/nwjs/libffmpegsumo.so
+elif test -f /opt/google/chrome-unstable/libffmpegsumo.so; then
+	cp /opt/google/chrome-unstable/libffmpegsumo.so node_modules/nw/nwjs/libffmpegsumo.so
 elif test -f /usr/lib/chromium/libffmpegsumo.so; then
 	cp /usr/lib/chromium/libffmpegsumo.so node_modules/nw/nwjs/libffmpegsumo.so
 else
