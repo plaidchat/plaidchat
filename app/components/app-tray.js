@@ -2,7 +2,21 @@
 	'use strict';
 	// Load in our dependencies
 	var require = nw.require;
-	console.log(require('./package.json'));
+	try {
+		console.log(nw.require('./package.json'));
+	} catch (e) {
+		console.error(e);
+	}
+	try {
+		console.log(nw.require('../package.json'));
+	} catch (e) {
+		console.error(e);
+	}
+	try {
+		console.log(nw.require('../../package.json'));
+	} catch (e) {
+		console.error(e);
+	}
 	var assert = require('assert');
 	var fs = require('fs');
 	var gui = nw.gui;
