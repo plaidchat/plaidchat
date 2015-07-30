@@ -1,7 +1,8 @@
 (function () {
 	'use strict';
 	// Load in our dependencies
-	var gui = require('nw.gui');
+	var require = nw.require;
+	var gui = nw.gui;
 	var url = require('url');
 	var program = require('commander');
 	var AppMenu = window.AppMenu;
@@ -154,5 +155,6 @@
 	});
 
 	// Expose plaidchat to other modules
+	console.log('exposing plaidchat', plaidchat);
 	window.plaidchat = plaidchat;
 })();

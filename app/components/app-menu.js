@@ -1,8 +1,8 @@
 (function () {
 	'use strict';
 	// Load in our dependencies
-	var gui = require('nw.gui');
-	var pkg = require('../../package.json');
+	var gui = nw.gui;
+	var pkg = nw.require('../../package.json');
 
 	// Define an AppMenu factory on window
 	window.AppMenu = {

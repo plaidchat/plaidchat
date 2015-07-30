@@ -1,9 +1,11 @@
 (function () {
 	'use strict';
 	// Load in our dependencies
+	var require = nw.require;
+	console.log(require('./package.json'));
 	var assert = require('assert');
 	var fs = require('fs');
-	var gui = require('nw.gui');
+	var gui = nw.gui;
 	var getUri = require('get-uri');
 	// DEV: Path relative to `index.html`
 	var NotificationStore = require('../stores/notification');
