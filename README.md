@@ -8,6 +8,7 @@ A Slack client for Linux. Uses [nw.js][].
 - Tray icon with notifications
 - Multi-team support
 - Watch videos in application
+- [Newsletter to know about updates and new features](#newsletter)
 
 ![Screenshot](docs/screenshot.png)
 
@@ -36,6 +37,12 @@ plaidchat
 ```
 
 `plaidchat` is not created by, affiliated with, or supported by Slack Technologies, Inc.
+
+Newsletter
+==========
+Want to hear about our updates and new features as soon as they happen?
+
+[Sign up for our newsletter!](http://eepurl.com/buEVff)
 
 CLI options
 ===========
