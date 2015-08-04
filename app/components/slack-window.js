@@ -45,13 +45,13 @@
 				// If the target isn't a link, skip it
 				// DEV: This is a lo-fi event delegation. If we ever use it elsewhere, please use something more formal
 				var targetEl = evt.target;
-				while (targetEl !== bodyEl) {
+				while (targetEl && targetEl !== bodyEl) {
 					if (targetEl.tagName.toLowerCase() === 'a') {
 						break;
 					}
 					targetEl = targetEl.parentNode;
 				}
-				if (targetEl === bodyEl) {
+				if (!targetEl || targetEl === bodyEl) {
 					return;
 				}
 
@@ -109,6 +109,29 @@
 					}
 				}
 			});
+		},
+
+		// Override the team select action of the Slack quick switcher
+		addOmniboxOverrides: function () {
+			// If this is a page with TS on it, then install our overrides
+			var win = this.getWindow();
+			var TS = this.getTS();
+			// http://viewsource.in/https://slack.global.ssl.fastly.net/7eab/js/rollup-client.js#L10432
+			if (TS && TS.ui && TS.ui.omnibox && TS.ui.omnibox.selectTeamResult && !win._plaidchatBoundOmniboxOverrides) {
+				TS.ui.omnibox.selectTeamResult = function (teamUrl, teamName, userId) {
+					// ['https://plaidchat-test.slack.com/', 'plaidchat test', 'U039G6820' /* User id on selected team */]
+					// Hide the window and cancel the box as done in Slack
+					TS.ui.omnibox.div.find('#omnibox_ui').addClass('hidden');
+					TS.ui.omnibox.cancel();
+
+					// Dispatch our team activation
+					AppDispatcher.dispatch({
+						type: AppDispatcher.ActionTypes.ACTIVATE_TEAM,
+						userId: userId
+					});
+				};
+				win._plaidchatBoundOmniboxOverrides = true;
+			}
 		},
 
 		// When React adds/removes our `iframe` to the DOM
@@ -191,6 +214,7 @@
 			// When our page loads, hook up listeners
 			this.addNotificationListeners();
 			this.addClickListeners();
+			this.addOmniboxOverrides();
 			this.resetTeamsLoaded();
 			this.watchTeamsLoaded();
 		},

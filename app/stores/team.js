@@ -117,6 +117,13 @@
 			// Lookup and return our team by its id
 			return _state.teamsById[id];
 		},
+		getTeamByUserId: function (userId) {
+			// DEV: This isn't performant as we loop over rather than doing an index lookup
+			//   Maybe we should use a dictionary for tracking user ids as well?
+			var teams = _.values(_state.teamsById);
+			var team = _.findWhere(teams, {id: userId});
+			return team || null;
+		},
 		getTeamsById: function () {
 			return _state.teamsById;
 		},
@@ -137,6 +144,10 @@
 					this.removeTeamById(oldTeamId);
 				}
 			}
+		},
+		setActiveTeamByUserId: function (id) {
+			var team = this.getTeamByUserId(id);
+			return this.setActiveTeamId(team.team_id);
 		},
 		setTeamIcon: function (id, teamIcon) {
 			_state.teamIconsById[id] = _.clone(teamIcon);
@@ -208,8 +219,12 @@
 	// Define our handler for various updates
 	TeamStore.dispatchToken = AppDispatcher.register(function handleAction (action) {
 		if (action.type === ActionTypes.ACTIVATE_TEAM) {
-			console.debug('Setting active team id', {teamId: action.teamId});
-			TeamStore.setActiveTeamId(action.teamId);
+			console.debug('Setting active team', {teamId: action.teamId, userId: action.userId});
+			if (action.teamId !== undefined) {
+				TeamStore.setActiveTeamId(action.teamId);
+			} else {
+				TeamStore.setActiveTeamByUserId(action.userId);
+			}
 			TeamStore.emitChange();
 		} else if (action.type === ActionTypes.ADD_TEAM_REQUESTED) {
 			console.debug('Adding placeholder team');
