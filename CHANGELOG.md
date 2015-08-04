@@ -1,5 +1,10 @@
 ## plaidchat changelog
 
+### v2.12.0 (2015/08/04 17:44 +00:00)
+- [#120](https://github.com/plaidchat/plaidchat/pull/120) Added in Quick Switcher team switch patch (@twolfson)
+- [#119](https://github.com/plaidchat/plaidchat/pull/119) Added zoom commands (@twolfson)
+- [#125](https://github.com/plaidchat/plaidchat/pull/125) Added newsletter information to README (@twolfson)
+
 ### v2.11.0 (2015/07/29 07:23 +00:00)
 - [#123](https://github.com/plaidchat/plaidchat/pull/123) Added libffmpegsumo.so detection for Google Chrome Beta/Unstable (@twolfson)
 
