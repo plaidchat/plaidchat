@@ -133,19 +133,6 @@ machines. If you run into
 
 Give [Issue #1](https://github.com/plaidchat/plaidchat/issues/1) a look.
 
-Crashing when receiving direct message
---------------------------------------
-We have had multiple reports of `plaidchat` crashing when a direct message is received.
-
-This typically is caused by installing while an older version of Google Chrome is on your machine (we use its `libffmpegsumo.so` for audio bindings).
-
-To fix the issue, perform the following steps:
-
-1. Update your version of Google Chrome to its latest version
-    - For example, if your Google Chrome was installed via `apt`/`dpkg`, then run `apt-get install google-chrome-stable`
-2. Reinstall `plaidchat` to pick up the latest version of `libffmpegsumo.so`
-    - `npm uninstall -g plaidchat && npm install -g plaidchat`
-
 Contributing
 ============
 Interested in contributing? Great, we are always looking for more great people.
@@ -158,7 +145,7 @@ License
 =======
 `plaidchat` is licensed under the [MIT license][].
 
-Upon installation, we may copy `libffmpegsumo.so` from `/opt/google/chrome` (from [ffmpeg][]) into our repository. We are required to mention that this file is licensed under the [GPL license][ffmpeg-license].
+Upon installation, we may copy `libffmpegsumo.so` from `electron-prebuilt` (from [ffmpeg][]) into our repository. We are required to mention that this file is licensed under the [GPL license][ffmpeg-license].
 
 [MIT License]: LICENSE
 [ffmpeg]: http://ffmpeg.org/
