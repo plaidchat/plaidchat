@@ -22,6 +22,7 @@
   "dependencies": {
     "browserify": "^10.2.4",
     "commander": "^2.8.1",
+    "electron-prebuilt": "~0.30.2",
     "favico.js": "^0.3.8",
     "flux": "^2.0.3",
     "get-uri": "^0.1.3",
