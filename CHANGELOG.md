@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.13.0 (2015/08/28 19:07 +00:00)
+- [#129](https://github.com/plaidchat/plaidchat/pull/129) Moved from Google Chrome to electron-prebuilt for libffmpegsumo.so (@twolfson)
+
 ### v2.12.0 (2015/08/04 17:44 +00:00)
 - [#120](https://github.com/plaidchat/plaidchat/pull/120) Added in Quick Switcher team switch patch (@twolfson)
 - [#119](https://github.com/plaidchat/plaidchat/pull/119) Added zoom commands (@twolfson)
