@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Plaidchat
+Comment=A Slack Interface for Linux
+Icon=slack
+Exec=plaidchat
+Terminal=false
+Type=Application
+Categories=Network;Chat;
+Keywords=slack;plaidchat;chat;instant-messaging;
+

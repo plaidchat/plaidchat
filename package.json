@@ -58,9 +58,11 @@
     "github-changes": "^1.0.0",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
+    "grunt-contrib-copy": "^0.8.1",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-jscs": "^1.1.0",
     "grunt-lintspaces": "^0.6.0",
+    "grunt-nw-builder": "^2.0.0",
     "mocha": "^2.2.5",
     "wd": "^0.3.12",
     "webdriver-manager": "^7.0.1"
