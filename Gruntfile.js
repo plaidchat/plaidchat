@@ -55,7 +55,9 @@ module.exports = function (grunt) {
 		},
 		copy: {
 			build: {
-				options: { mode: '0755' },
+				options: {
+					mode: '0755'
+				},
 				files: [
 					{
 						src: './node_modules/electron-prebuilt/dist/libffmpegsumo.so',
