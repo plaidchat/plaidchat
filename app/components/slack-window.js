@@ -4,6 +4,7 @@
 	var React = window.React;
 	var TeamStore = require('../stores/team');
 	var AppDispatcher = require('../dispatchers/app');
+	var SlackContextMenu = require('./slack-context-menu');
 
 	// Define our SlackWindow
 	module.exports = React.createClass({
@@ -41,6 +42,11 @@
 			var win = this.getWindow();
 			var bodyEl = win.document.body;
 			var that = this;
+
+			win.addEventListener('contextmenu', function handleContextMenu (evt) {
+				SlackContextMenu.handleRightClick(that.getWindow(), evt.target, evt.x, evt.y);
+			});
+
 			win.addEventListener('click', function handleClick (evt) {
 				// If the target isn't a link, skip it
 				// DEV: This is a lo-fi event delegation. If we ever use it elsewhere, please use something more formal
