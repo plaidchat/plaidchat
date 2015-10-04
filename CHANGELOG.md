@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.14.0 (2015/10/04 23:59 +00:00)
+- [#136](https://github.com/plaidchat/plaidchat/pull/136) Added new context menu for various elements. (@justinnichols)
+
 ### v2.13.0 (2015/08/28 19:07 +00:00)
 - [#129](https://github.com/plaidchat/plaidchat/pull/129) Moved from Google Chrome to electron-prebuilt for libffmpegsumo.so (@twolfson)
 
@@ -19,7 +22,7 @@
 
 ### v2.9.0 (2015/07/20 02:12 +00:00)
 - [#113](https://github.com/plaidchat/plaidchat/pull/113) Updated CLI help (@twolfson)
-- [#112](https://github.com/plaidchat/plaidchat/pull/112) Add the --close-to-tray command line option. (@LuckyThirteen)
+- [#112](https://github.com/plaidchat/plaidchat/pull/112) Add the --close-to-tray command line option. (@tomb0y)
 
 ### v2.8.0 (2015/07/18 22:49 +00:00)
 - [#110](https://github.com/plaidchat/plaidchat/pull/110) Finished remaining tests and caught "Switch Team" regression (@twolfson)
@@ -33,7 +36,7 @@
 - [#105](https://github.com/plaidchat/plaidchat/pull/105) Moved to new Slack login URL (@twolfson)
 
 ### v2.6.0 (2015/06/29 20:55 +00:00)
-- [#90](https://github.com/plaidchat/plaidchat/pull/90) Completed --minimize-to-tray support (@twolfson, @LuckyThirteen)
+- [#90](https://github.com/plaidchat/plaidchat/pull/90) Completed --minimize-to-tray support (@twolfson, @tomb0y)
 
 ### v2.5.1 (2015/06/29 02:08 +00:00)
 - [#99](https://github.com/plaidchat/plaidchat/pull/99) Added support for GITHUB_TOKEN in `release.sh` (@twolfson)
