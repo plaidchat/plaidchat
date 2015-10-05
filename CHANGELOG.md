@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.14.1 (2015/10/05 01:40 +00:00)
+- [#137](https://github.com/plaidchat/plaidchat/pull/137) Fixed lint targets (@twolfson)
+
 ### v2.14.0 (2015/10/04 23:59 +00:00)
 - [#136](https://github.com/plaidchat/plaidchat/pull/136) Added new context menu for various elements. (@justinnichols)
 
