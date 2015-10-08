@@ -44,7 +44,13 @@
 			var that = this;
 
 			win.addEventListener('contextmenu', function handleContextMenu (evt) {
-				SlackContextMenu.handleRightClick(that.getWindow(), evt.target, evt.x, evt.y);
+				SlackContextMenu.handleRightClick({
+					target: evt.target,
+					teamUrl: that.props.team.team_url,
+					window: that.getWindow(),
+					x: evt.x,
+					y: evt.y
+				});
 			});
 
 			win.addEventListener('click', function handleClick (evt) {
