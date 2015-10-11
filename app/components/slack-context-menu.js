@@ -53,7 +53,8 @@
 		});
 	}
 
-	function buildTextareaMenu(menu, target) {
+	function buildTextareaMenu(menu, params) {
+		var target = params.target;
 		var selected = isSelected(target);
 
 		// Select all
@@ -97,7 +98,8 @@
 		}
 	}
 
-	function buildImageMenu(menu, target) {
+	function buildImageMenu(menu, params) {
+		var target = params.target;
 		menu.append(new gui.MenuItem({
 			label: 'Open Image in Browser',
 			click: function () {
@@ -108,22 +110,37 @@
 		}));
 	}
 
-	function buildLinkMenu(menu, target) {
+	function buildLinkMenu(menu, params) {
+		var target = params.target;
+		var teamUrl = params.teamUrl;
+
 		if (target.attributes.href && target.attributes.href.value) {
 			var hrefValue = target.attributes.href.value;
-			if (hrefValue.startsWith('http') || hrefValue.startsWith('https')) {
-				menu.append(new gui.MenuItem({
-					label: 'Open Link in Browser',
-					click: function () {
-						gui.Shell.openExternal(hrefValue);
-					}
-				}));
+
+			// Relative URL, let's prepend the team URL.
+			// For example, `/archives` would become `https://team.slack.com/archives`
+			if (hrefValue.startsWith('/') && !hrefValue.startsWith('//')) {
+				hrefValue = teamUrl.slice(0, -1) + hrefValue;
 			}
+
+			menu.append(new gui.MenuItem({
+				label: 'Copy Link',
+				click: function () {
+					clipboard.set(hrefValue);
+				}
+			}));
+
+			menu.append(new gui.MenuItem({
+				label: 'Open Link',
+				click: function () {
+					gui.Shell.openExternal(hrefValue);
+				}
+			}));
 		}
 	}
 
-	function buildGenericMenu(window, menu) {
-		var selection = window.getSelection();
+	function buildGenericMenu(menu, params) {
+		var selection = params.window.getSelection();
 		var selected = selection && selection.toString() && selection.toString().trim().length > 0;
 
 		if (selected) {
@@ -138,31 +155,33 @@
 	}
 
 	module.exports = {
-		handleRightClick: function (window, target, x, y) {
+		handleRightClick: function (params) {
+			var target = params.target;
+
 			if (target && target.nodeName) {
 				var menu = new gui.Menu();
 
 				switch (target.nodeName.toUpperCase()) {
 					case 'TEXTAREA': {
-						buildTextareaMenu(menu, target);
+						buildTextareaMenu(menu, params);
 						break;
 					}
 					case 'IMG': {
-						buildImageMenu(menu, target);
+						buildImageMenu(menu, params);
 						break;
 					}
 					case 'A': {
-						buildLinkMenu(menu, target);
+						buildLinkMenu(menu, params);
 						break;
 					}
 					default: {
-						buildGenericMenu(window, menu);
+						buildGenericMenu(menu, params);
 						break;
 					}
 				}
 
 				if (menu.items.length > 0) {
-					menu.popup(x, y);
+					menu.popup(params.x, params.y);
 				}
 			}
 		}
