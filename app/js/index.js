@@ -27,6 +27,7 @@
 		.version(pkg.version)
 		.option('--minimize-to-tray', 'When the tray icon is clicked, hide the window rather than minimize')
 		.option('--close-to-tray', 'When the close button is clicked, minimize the app to tray instead of killing it.')
+		.option('--force-device-scale-factor=[value]', 'Sets the UI scaling factor (default: 1, set to 2 for high-DPI)')
 		// Allow unknown Chromium flags (used by integration tests)
 		.allowUnknownOption()
 		.parse(argv);
