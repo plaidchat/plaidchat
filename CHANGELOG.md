@@ -1,5 +1,8 @@
 ## plaidchat changelog
 
+### v2.15.1 (2016/02/03 02:19 +00:00)
+- [#148](https://github.com/plaidchat/plaidchat/pull/148) Moved to require.resolve for finding libffmpegsumo.so src and target (@twolfson)
+
 ### v2.15.0 (2015/10/11 23:35 +00:00)
 - [#139](https://github.com/plaidchat/plaidchat/pull/139) Context menu enhancements (@mathieumg)
 
