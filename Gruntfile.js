@@ -1,3 +1,5 @@
+var pkg = require('./package.json');
+
 module.exports = function (grunt) {
 	'use strict';
 
@@ -5,6 +7,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-jscs');
 	grunt.loadNpmTasks('grunt-lintspaces');
+	grunt.loadNpmTasks('grunt-nw-builder');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 
 	grunt.initConfig({
 		jshint: {
@@ -26,8 +30,48 @@ module.exports = function (grunt) {
 			options: {
 				editorconfig: '.editorconfig'
 			}
+		},
+		nwjs: {
+			build: {
+				options: {
+					platforms: ['linux'],
+					buildDir: './build',
+					version: pkg.dependencies.nw.replace(/[^\d.]+/g, '')
+				},
+				src: [
+					'./package.json',
+					'./dist/**/*',
+					'./app/**/*',
+					'./node_modules/**/*',
+					'!./node_modules/nw/**',
+					'!./node_modules/grunt*/**',
+					'!./node_modules/mocha/**',
+					'!./node_modules/webdriver-manager/**',
+					'!./node_modules/electron-prebuild/**',
+					'!./node_modules/wd/**',
+					'!./node_modules/chai/**'
+				]
+			}
+		},
+		copy: {
+			build: {
+				options: {
+					mode: '0755'
+				},
+				files: [
+					{
+						src: './node_modules/electron-prebuilt/dist/libffmpegsumo.so',
+						dest: './build/plaidchat/linux64/libffmpegsumo.so'
+					},
+					{
+						src: './node_modules/electron-prebuilt/dist/libffmpegsumo.so',
+						dest: './build/plaidchat/linux32/libffmpegsumo.so'
+					}
+				]
+			}
 		}
 	});
 
 	grunt.registerTask('lint', ['jshint', 'jscs', 'lintspaces']);
+	grunt.registerTask('build', ['nwjs:build', 'copy:build']);
 };
